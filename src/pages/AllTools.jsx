@@ -1,0 +1,88 @@
+import { Link } from 'react-router-dom'
+
+const allTools = [
+  {
+    category: 'Organize',
+    tools: [
+      { to: '/tools/merge', icon: '🔗', label: 'Merge PDF', desc: 'Combine multiple PDFs into one file', color: 'bg-purple' },
+      { to: '/tools/split', icon: '✂️', label: 'Split PDF', desc: 'Split PDF into individual pages or ranges', color: 'bg-blue' },
+      { to: '/tools/reorder', icon: '📋', label: 'Reorder Pages', desc: 'Drag and drop to reorganize pages', color: 'bg-indigo' },
+    ]
+  },
+  {
+    category: 'Optimize',
+    tools: [
+      { to: '/tools/compress', icon: '📦', label: 'Compress PDF', desc: 'Reduce PDF file size without losing quality', color: 'bg-green' },
+      { to: '/tools/rotate', icon: '🔄', label: 'Rotate PDF', desc: 'Rotate all or specific pages', color: 'bg-cyan' },
+    ]
+  },
+  {
+    category: 'Security',
+    tools: [
+      { to: '/tools/watermark', icon: '💧', label: 'Watermark PDF', desc: 'Add text watermarks to every page', color: 'bg-orange' },
+      { to: '/tools/protect', icon: '🔒', label: 'Protect PDF', desc: 'Secure PDF with protection settings', color: 'bg-red' },
+    ]
+  },
+  {
+    category: 'Inspect',
+    tools: [
+      { to: '/tools/info', icon: '📊', label: 'PDF Info', desc: 'View metadata, pages, and document details', color: 'bg-pink' },
+    ]
+  },
+  {
+    category: 'Convert',
+    tools: [
+      { to: '/tools/jpg-to-pdf', icon: '🖼️', label: 'JPG to PDF', desc: 'Convert JPG/PNG to PDF file', color: 'bg-teal' },
+      { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
+    ]
+  },
+]
+
+export default function AllTools() {
+  return (
+    <div className="section">
+      <div className="container">
+        <div className="section-header">
+          <span className="badge badge-purple" style={{ marginBottom: 16 }}>🔧 All Tools</span>
+          <h1>All <span className="gradient-text">PDF Tools</span></h1>
+          <p>Everything you need to work with PDF files — free, fast, and secure.</p>
+        </div>
+
+        {allTools.map((cat) => (
+          <div key={cat.category} style={{ marginBottom: 48 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+              <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-secondary)' }}>{cat.category}</h2>
+              <div style={{ flex: 1, height: 1, background: 'var(--border-light)' }} />
+            </div>
+            <div className="tools-grid">
+              {cat.tools.map((t) => (
+                <Link key={t.to} to={t.to} className="tool-card">
+                  <div className={`tool-icon-wrap ${t.color}`}>{t.icon}</div>
+                  <div className="tool-card-name">{t.label}</div>
+                  <div className="tool-card-desc">{t.desc}</div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        {/* Coming Soon */}
+        <div style={{ marginTop: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <h2 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-secondary)' }}>Coming Soon</h2>
+            <div style={{ flex: 1, height: 1, background: 'var(--border-light)' }} />
+          </div>
+          <div className="tools-grid">
+            {['PDF to Word','PDF to Excel','PDF to JPG','JPG to PDF','Sign PDF','OCR PDF'].map(name => (
+              <div key={name} className="tool-card" style={{ opacity: 0.5, cursor: 'default', pointerEvents: 'none' }}>
+                <div className="tool-icon-wrap bg-purple" style={{ filter: 'grayscale(1)' }}>🔜</div>
+                <div className="tool-card-name">{name}</div>
+                <div className="tool-card-desc" style={{ color: 'var(--accent-purple-light)', fontWeight: 600 }}>Coming Soon</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
