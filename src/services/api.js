@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: '/api',
   timeout: 120000, // 2 min for large files
 })
 
@@ -104,6 +104,14 @@ export const pdfApi = {
     const form = new FormData()
     form.append('file', file)
     return api.post('/pdf/extract-text', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  wordToPdf: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/word-to-pdf', form, {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })

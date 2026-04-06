@@ -12,6 +12,7 @@ const tools = [
   { to: '/tools/info',     icon: '📊', label: 'PDF Info',       desc: 'View metadata and page details',       color: 'bg-pink' },
   { to: '/tools/jpg-to-pdf',icon: '🖼️', label: 'JPG to PDF',       desc: 'Convert images to PDF documents',       color: 'bg-teal' },
   { to: '/tools/extract-text',icon: '📝', label: 'Extract Text',    desc: 'Get searchable text from PDF',         color: 'bg-purple' },
+  { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF',      desc: 'Convert Word to PDF document',         color: 'bg-indigo' },
 ]
 
 const features = [
@@ -27,7 +28,7 @@ const faqs = [
   { q: 'Are my uploaded files safe?', a: 'Yes! All uploaded files are processed securely and automatically deleted from our server after 1 hour. We never share your files with third parties.' },
   { q: 'What is the maximum file size?', a: 'You can upload PDF files up to 50MB in size. For merge operations, you can upload up to 20 files at once.' },
   { q: 'Do I need to create an account?', a: 'No account is required to use any PDF tool. Creating a free account lets you access your processing history and manage your files.' },
-  { q: 'What PDF operations are supported?', a: 'We support merging, splitting, compressing, rotating, watermarking, protecting and reordering pages. More tools are coming soon!' },
+  { q: 'What PDF operations are supported?', a: 'We support merging, splitting, compressing, rotating, watermarking, protecting, reordering, and converting Word/Images to PDF. More tools are coming soon!' },
   { q: 'Is PDFtoolkit really free?', a: 'Yes! All core PDF tools are completely free. We plan to offer a Pro plan with advanced features in the future.' },
 ]
 

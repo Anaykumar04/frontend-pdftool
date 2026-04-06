@@ -14,6 +14,7 @@ const tools = [
   { to: '/tools/info', label: 'PDF Info', icon: '📊' },
   { to: '/tools/jpg-to-pdf', label: 'JPG to PDF', icon: '🖼️' },
   { to: '/tools/extract-text', label: 'Extract Text', icon: '📝' },
+  { to: '/tools/word-to-pdf', label: 'Word to PDF', icon: '📄' },
 ]
 
 export default function Navbar() {

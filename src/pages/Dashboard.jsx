@@ -16,6 +16,7 @@ const tools = [
   { to: '/tools/info', icon: '📊', label: 'PDF Info', color: 'bg-pink' },
   { to: '/tools/jpg-to-pdf', icon: '🖼️', label: 'JPG to PDF', color: 'bg-teal' },
   { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', color: 'bg-purple' },
+  { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF', color: 'bg-indigo' },
 ]
 
 export default function Dashboard() {

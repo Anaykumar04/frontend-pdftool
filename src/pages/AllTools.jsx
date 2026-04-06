@@ -34,6 +34,7 @@ const allTools = [
     tools: [
       { to: '/tools/jpg-to-pdf', icon: '🖼️', label: 'JPG to PDF', desc: 'Convert JPG/PNG to PDF file', color: 'bg-teal' },
       { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
+      { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF', desc: 'Convert Word document to PDF', color: 'bg-indigo' },
     ]
   },
 ]
@@ -73,7 +74,7 @@ export default function AllTools() {
             <div style={{ flex: 1, height: 1, background: 'var(--border-light)' }} />
           </div>
           <div className="tools-grid">
-            {['PDF to Word','PDF to Excel','PDF to JPG','JPG to PDF','Sign PDF','OCR PDF'].map(name => (
+            {['PDF to Word','PDF to Excel','PDF to JPG','Sign PDF','OCR PDF'].map(name => (
               <div key={name} className="tool-card" style={{ opacity: 0.5, cursor: 'default', pointerEvents: 'none' }}>
                 <div className="tool-icon-wrap bg-purple" style={{ filter: 'grayscale(1)' }}>🔜</div>
                 <div className="tool-card-name">{name}</div>

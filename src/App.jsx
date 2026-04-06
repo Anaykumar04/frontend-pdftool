@@ -16,6 +16,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import ImageToPDF from './pages/tools/ImageToPDF'
 import ExtractText from './pages/tools/ExtractText'
+import WordToPDF from './pages/tools/WordToPDF'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
 import ScrollToTop from './components/ScrollToTop'
@@ -39,6 +40,7 @@ export default function App() {
           <Route path="/tools/info" element={<PDFInfo />} />
           <Route path="/tools/jpg-to-pdf" element={<ImageToPDF />} />
           <Route path="/tools/extract-text" element={<ExtractText />} />
+          <Route path="/tools/word-to-pdf" element={<WordToPDF />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />

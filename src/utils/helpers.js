@@ -30,14 +30,15 @@ export const getOperationLabel = (op) => {
     rotate: 'Rotate PDF', watermark: 'Add Watermark', protect: 'Protect PDF',
     unlock: 'Unlock PDF', reorder: 'Reorder Pages',
     'pdf-to-jpg': 'PDF to JPG', 'jpg-to-pdf': 'JPG to PDF',
-    'pdf-to-word': 'PDF to Word', 'word-to-pdf': 'Word to PDF'
+    'pdf-to-word': 'PDF to Word', 'word-to-pdf': 'Word to PDF',
+    'extract-text': 'Extract Text', 'info': 'PDF Info'
   }
   return labels[op] || op
 }
 
 export const downloadFile = (url, filename) => {
   const a = document.createElement('a')
-  a.href = `http://localhost:5000${url}`
+  a.href = url
   a.download = filename || 'download'
   document.body.appendChild(a)
   a.click()
