@@ -351,6 +351,13 @@ textarea {
   width: 100%;
   transition: border-color var(--transition);
   outline: none;
+  appearance: none; /* Reset standard appearance for better consistency */
+}
+
+select option {
+  background-color: var(--bg-card); /* Ensure solid background for options */
+  color: var(--text-primary);
+  padding: 12px;
 }
 
 input:focus,
