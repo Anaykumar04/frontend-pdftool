@@ -54,13 +54,22 @@ export default function ResultPanel({ result, onReset, extraInfo }) {
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: 10, width: '100%' }}>
-          <button className="btn btn-ghost" style={{ flex: 1, justifyContent: 'center' }} onClick={handleShare}>
-            <FiShare2 /> Share Link
-          </button>
-          <button className="btn btn-ghost" style={{ flex: 1, justifyContent: 'center' }} onClick={onReset}>
-            <FiRefreshCw /> Start Over
-          </button>
+        <div style={{ display: 'flex', gap: 10, width: '100%', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', gap: 10, width: '100%' }}>
+            <button className="btn btn-ghost" style={{ flex: 1, justifyContent: 'center' }} onClick={handleShare}>
+              <FiShare2 /> Copy Link
+            </button>
+            <button className="btn btn-ghost" style={{ flex: 1, justifyContent: 'center' }} onClick={onReset}>
+              <FiRefreshCw /> Start Over
+            </button>
+          </div>
+          
+          {!isArray && result.output?.url && (
+            <div className="result-url-box">
+              <span className="result-url-text">{window.location.origin + result.output.url}</span>
+              <button className="btn-copy-sm" onClick={handleShare}>Copy</button>
+            </div>
+          )}
         </div>
       </div>
 

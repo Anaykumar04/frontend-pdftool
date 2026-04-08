@@ -115,6 +115,35 @@ export const pdfApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })
+  },
+  pageNumbers: (file, position, fontSize, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('position', position)
+    form.append('fontSize', fontSize)
+    return api.post('/pdf/page-numbers', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  deletePages: (file, pages, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('pages', JSON.stringify(pages))
+    return api.post('/pdf/delete-pages', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  addStamp: (file, text, color, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('text', text)
+    form.append('color', color)
+    return api.post('/pdf/add-stamp', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
   }
 }
 

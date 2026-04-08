@@ -1563,3 +1563,41 @@ input[type="checkbox"] {
   font-size: 12px;
   color: var(--text-secondary);
 }
+
+/* Result URL Box */
+.result-url-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  margin-top: 4px;
+}
+
+.result-url-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--accent-purple-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: monospace;
+}
+
+.btn-copy-sm {
+  background: var(--bg-glass-hover);
+  border: 1px solid var(--border);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.btn-copy-sm:hover {
+  background: var(--accent-purple);
+  border-color: var(--accent-purple);
+}

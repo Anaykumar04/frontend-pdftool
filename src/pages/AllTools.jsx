@@ -7,34 +7,46 @@ const allTools = [
       { to: '/tools/merge', icon: '🔗', label: 'Merge PDF', desc: 'Combine multiple PDFs into one file', color: 'bg-purple' },
       { to: '/tools/split', icon: '✂️', label: 'Split PDF', desc: 'Split PDF into individual pages or ranges', color: 'bg-blue' },
       { to: '/tools/reorder', icon: '📋', label: 'Reorder Pages', desc: 'Drag and drop to reorganize pages', color: 'bg-indigo' },
+      { to: '/tools/page-number', icon: '🔢', label: 'Page Numbers', desc: 'Add page numbers to your document', color: 'bg-cyan' },
+      { to: '/tools/delete-page', icon: '🗑️', label: 'Delete Page', desc: 'Remove unwanted pages from PDF', color: 'bg-red' },
     ]
   },
   {
-    category: 'Optimize',
+    category: 'Optimize & Edit',
     tools: [
       { to: '/tools/compress', icon: '📦', label: 'Compress PDF', desc: 'Reduce PDF file size without losing quality', color: 'bg-green' },
       { to: '/tools/rotate', icon: '🔄', label: 'Rotate PDF', desc: 'Rotate all or specific pages', color: 'bg-cyan' },
+      { to: '/tools/edit', icon: '✏️', label: 'PDF Editor', desc: 'Edit PDF text and elements online', color: 'bg-purple' },
+      { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change the background color of pages', color: 'bg-pink' },
     ]
   },
   {
-    category: 'Security',
+    category: 'Security & Sign',
     tools: [
       { to: '/tools/watermark', icon: '💧', label: 'Watermark PDF', desc: 'Add text watermarks to every page', color: 'bg-orange' },
       { to: '/tools/protect', icon: '🔒', label: 'Protect PDF', desc: 'Secure PDF with protection settings', color: 'bg-red' },
+      { to: '/tools/sign', icon: '✍️', label: 'Sign PDF', desc: 'Add your signature or digital stamp', color: 'bg-teal' },
+      { to: '/tools/add-stamp', icon: '💮', label: 'Add Stamp', desc: 'Apply professional stamps to pages', color: 'bg-purple' },
     ]
   },
   {
-    category: 'Inspect',
-    tools: [
-      { to: '/tools/info', icon: '📊', label: 'PDF Info', desc: 'View metadata, pages, and document details', color: 'bg-pink' },
-    ]
-  },
-  {
-    category: 'Convert',
+    category: 'Convert to PDF',
     tools: [
       { to: '/tools/jpg-to-pdf', icon: '🖼️', label: 'JPG to PDF', desc: 'Convert JPG/PNG to PDF file', color: 'bg-teal' },
-      { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
       { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF', desc: 'Convert Word document to PDF', color: 'bg-indigo' },
+      { to: '/tools/csv-to-pdf', icon: '📊', label: 'CSV to PDF', desc: 'Convert CSV data to PDF document', color: 'bg-green' },
+      { to: '/tools/json-to-pdf', icon: '📊', label: 'JSON to PDF', desc: 'Convert JSON data into PDF', color: 'bg-purple' },
+      { to: '/tools/xml-to-pdf', icon: '📜', label: 'XML to PDF', desc: 'Convert XML structure into PDF', color: 'bg-blue' },
+      { to: '/tools/email-to-pdf', icon: '📧', label: 'Email to PDF', desc: 'Save emails as professional PDFs', color: 'bg-orange' },
+    ]
+  },
+  {
+    category: 'Convert from PDF',
+    tools: [
+      { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
+      { to: '/tools/pdf-to-jpg', icon: '📷', label: 'PDF to JPG', desc: 'Extract pages as high-quality images', color: 'bg-orange' },
+      { to: '/tools/pdf-to-word', icon: '📘', label: 'PDF to Word', desc: 'Convert PDF to editable Word document', color: 'bg-blue' },
+      { to: '/tools/ocr', icon: '👁️', label: 'OCR PDF', desc: 'Make scanned PDFs searchable/editable', color: 'bg-pink' },
     ]
   },
 ]
@@ -74,7 +86,7 @@ export default function AllTools() {
             <div style={{ flex: 1, height: 1, background: 'var(--border-light)' }} />
           </div>
           <div className="tools-grid">
-            {['PDF to Word','PDF to Excel','PDF to JPG','Sign PDF','OCR PDF'].map(name => (
+            {['Translated Pdf', 'Combine to single page', 'Extract Image', 'Remove blank page'].map(name => (
               <div key={name} className="tool-card" style={{ opacity: 0.5, cursor: 'default', pointerEvents: 'none' }}>
                 <div className="tool-icon-wrap bg-purple" style={{ filter: 'grayscale(1)' }}>🔜</div>
                 <div className="tool-card-name">{name}</div>

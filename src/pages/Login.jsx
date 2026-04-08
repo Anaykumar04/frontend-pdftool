@@ -57,6 +57,12 @@ export default function Login() {
         </form>
 
         <div className="auth-divider"><span>or</span></div>
+
+        <button type="button" className="btn btn-outline" style={{ width: '100%', justifyContent: 'center', gap: 12, marginBottom: 12 }}>
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google" style={{ width: 18 }} />
+          Continue with Google
+        </button>
+
         <Link to="/tools" className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}>
           Continue without account →
         </Link>
