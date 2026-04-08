@@ -25,8 +25,8 @@ const allTools = [
     tools: [
       { to: '/tools/watermark', icon: '💧', label: 'Watermark PDF', desc: 'Add text watermarks to every page', color: 'bg-orange' },
       { to: '/tools/protect', icon: '🔒', label: 'Protect PDF', desc: 'Secure PDF with protection settings', color: 'bg-red' },
-      { to: '/tools/sign', icon: '✍️', label: 'Sign PDF', desc: 'Add your signature or digital stamp', color: 'bg-teal' },
-      { to: '/tools/add-stamp', icon: '💮', label: 'Add Stamp', desc: 'Apply professional stamps to pages', color: 'bg-purple' },
+      { to: '/tools/sign', icon: '✍️', label: 'E-Sign PDF', desc: 'Sign with typed, drawn, or image signatures', color: 'bg-teal' },
+      { to: '/tools/add-stamp', icon: '💮', label: 'Official Stamp', desc: 'Apply specialized office rubber stamps', color: 'bg-purple' },
     ]
   },
   {

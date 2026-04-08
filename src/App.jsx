@@ -20,6 +20,7 @@ import WordToPDF from './pages/tools/WordToPDF'
 import PageNumber from './pages/tools/PageNumber'
 import DeletePage from './pages/tools/DeletePage'
 import SignPDF from './pages/tools/SignPDF'
+import AddStamp from './pages/tools/AddStamp'
 import TranslatePDF from './pages/tools/TranslatePDF'
 import FileConverter from './pages/tools/FileConverter'
 import ComingSoonTool from './pages/ComingSoonTool'
@@ -52,7 +53,7 @@ export default function App() {
           <Route path="/tools/page-number" element={<PageNumber />} />
           <Route path="/tools/delete-page" element={<DeletePage />} />
           <Route path="/tools/sign" element={<SignPDF />} />
-          <Route path="/tools/add-stamp" element={<SignPDF />} />
+          <Route path="/tools/add-stamp" element={<AddStamp />} />
           
           <Route path="/tools/json-to-pdf" element={<FileConverter title="JSON to PDF" type="JSON" icon="📊" endpoint="/pdf/json-to-pdf" colorClass="badge-purple" accept={{ 'application/json': ['.json'] }} />} />
           <Route path="/tools/xml-to-pdf" element={<FileConverter title="XML to PDF" type="XML" icon="📜" endpoint="/pdf/xml-to-pdf" colorClass="badge-blue" accept={{ 'application/xml': ['.xml'] }} />} />
