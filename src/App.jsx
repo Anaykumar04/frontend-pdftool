@@ -56,6 +56,8 @@ export default function App() {
           <Route path="/tools/json-to-pdf" element={<FileConverter title="JSON to PDF" type="JSON" icon="📊" endpoint="/pdf/json-to-pdf" colorClass="badge-purple" accept={{ 'application/json': ['.json'] }} />} />
           <Route path="/tools/xml-to-pdf" element={<FileConverter title="XML to PDF" type="XML" icon="📜" endpoint="/pdf/xml-to-pdf" colorClass="badge-blue" accept={{ 'application/xml': ['.xml'] }} />} />
           <Route path="/tools/email-to-pdf" element={<FileConverter title="Email to PDF" type="Email" icon="📧" endpoint="/pdf/email-to-pdf" colorClass="badge-orange" accept={{ 'text/plain': ['.txt', '.eml'] }} />} />
+          <Route path="/tools/csv-to-pdf" element={<FileConverter title="CSV to PDF" type="CSV" icon="📊" endpoint="/pdf/csv-to-pdf" colorClass="badge-green" accept={{ 'text/csv': ['.csv'] }} />} />
+          <Route path="/tools/extract-images" element={<FileConverter title="Extract Images" type="PDF" icon="🖼️" endpoint="/pdf/extract-images" colorClass="badge-pink" accept={{ 'application/pdf': ['.pdf'] }} />} />
 
           <Route path="/tools/edit" element={<ComingSoonTool name="PDF Editor" category="Optimize & Edit" />} />
           <Route path="/tools/background-color" element={<ComingSoonTool name="Background Color" category="Optimize & Edit" />} />
