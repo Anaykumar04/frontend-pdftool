@@ -55,6 +55,9 @@ export default function TranslatePDF() {
           <span className="badge badge-purple" style={{ marginBottom: 16 }}>🌍 Language</span>
           <h1>Translate PDF</h1>
           <p>Translate your PDF document into 100+ languages while maintaining a clean output.</p>
+          <div className="card-glass" style={{ padding: '8px 16px', display: 'inline-flex', alignItems: 'center', gap: 8, marginTop: 12, fontSize: 12, color: 'var(--accent-purple-light)', border: '1px solid var(--border)' }}>
+             <span>💡 Tip: Works best with text-based PDFs. Scanned images require OCR first.</span>
+          </div>
         </div>
 
         {result ? <ResultPanel result={result} onReset={reset} /> : (
