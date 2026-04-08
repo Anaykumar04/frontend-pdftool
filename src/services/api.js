@@ -144,6 +144,16 @@ export const pdfApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })
+  },
+  signImage: (pdf, signatureBlob, position, onProgress) => {
+    const form = new FormData()
+    form.append('pdf', pdf)
+    form.append('signature', signatureBlob, 'signature.png')
+    form.append('position', position)
+    return api.post('/pdf/sign-image', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
   }
 }
 

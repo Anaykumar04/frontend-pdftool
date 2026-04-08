@@ -20,6 +20,7 @@ import WordToPDF from './pages/tools/WordToPDF'
 import PageNumber from './pages/tools/PageNumber'
 import DeletePage from './pages/tools/DeletePage'
 import SignPDF from './pages/tools/SignPDF'
+import TranslatePDF from './pages/tools/TranslatePDF'
 import FileConverter from './pages/tools/FileConverter'
 import ComingSoonTool from './pages/ComingSoonTool'
 import NotFound from './pages/NotFound'
@@ -58,6 +59,7 @@ export default function App() {
           <Route path="/tools/email-to-pdf" element={<FileConverter title="Email to PDF" type="Email" icon="📧" endpoint="/pdf/email-to-pdf" colorClass="badge-orange" accept={{ 'text/plain': ['.txt', '.eml'] }} />} />
           <Route path="/tools/csv-to-pdf" element={<FileConverter title="CSV to PDF" type="CSV" icon="📊" endpoint="/pdf/csv-to-pdf" colorClass="badge-green" accept={{ 'text/csv': ['.csv'] }} />} />
           <Route path="/tools/extract-images" element={<FileConverter title="Extract Images" type="PDF" icon="🖼️" endpoint="/pdf/extract-images" colorClass="badge-pink" accept={{ 'application/pdf': ['.pdf'] }} />} />
+          <Route path="/tools/translate-pdf" element={<TranslatePDF />} />
 
           <Route path="/tools/edit" element={<ComingSoonTool name="PDF Editor" category="Optimize & Edit" />} />
           <Route path="/tools/background-color" element={<ComingSoonTool name="Background Color" category="Optimize & Edit" />} />

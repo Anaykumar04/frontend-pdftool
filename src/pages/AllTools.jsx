@@ -44,10 +44,10 @@ const allTools = [
     category: 'Convert from PDF',
     tools: [
       { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
-      { to: '/tools/pdf-to-jpg', icon: '📷', label: 'PDF to JPG', desc: 'Extract pages as high-quality images', color: 'bg-orange' },
       { to: '/tools/pdf-to-word', icon: '📘', label: 'PDF to Word', desc: 'Convert PDF to editable Word document', color: 'bg-blue' },
       { to: '/tools/ocr', icon: '👁️', label: 'OCR PDF', desc: 'Make scanned PDFs searchable/editable', color: 'bg-pink' },
       { to: '/tools/extract-images', icon: '🖼️', label: 'Extract Images', desc: 'Save all images from PDF as a ZIP', color: 'bg-teal' },
+      { to: '/tools/translate-pdf', icon: '🌍', label: 'Translate PDF', desc: 'Translate PDF to any language', color: 'bg-indigo' },
     ]
   },
 ]
@@ -87,7 +87,7 @@ export default function AllTools() {
             <div style={{ flex: 1, height: 1, background: 'var(--border-light)' }} />
           </div>
           <div className="tools-grid">
-            {['Translated Pdf', 'Combine to single page', 'Remove blank page'].map(name => (
+            {['Combine to single page', 'Remove blank page'].map(name => (
               <div key={name} className="tool-card" style={{ opacity: 0.5, cursor: 'default', pointerEvents: 'none' }}>
                 <div className="tool-icon-wrap bg-purple" style={{ filter: 'grayscale(1)' }}>🔜</div>
                 <div className="tool-card-name">{name}</div>
