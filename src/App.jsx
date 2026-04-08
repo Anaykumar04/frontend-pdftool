@@ -22,6 +22,8 @@ import DeletePage from './pages/tools/DeletePage'
 import SignPDF from './pages/tools/SignPDF'
 import AddStamp from './pages/tools/AddStamp'
 import TranslatePDF from './pages/tools/TranslatePDF'
+import PDFEditor from './pages/tools/PDFEditor'
+import BackgroundColor from './pages/tools/BackgroundColor'
 import FileConverter from './pages/tools/FileConverter'
 import ComingSoonTool from './pages/ComingSoonTool'
 import NotFound from './pages/NotFound'
@@ -62,8 +64,8 @@ export default function App() {
           <Route path="/tools/extract-images" element={<FileConverter title="Extract Images" type="PDF" icon="🖼️" endpoint="/pdf/extract-images" colorClass="badge-pink" accept={{ 'application/pdf': ['.pdf'] }} />} />
           <Route path="/tools/translate-pdf" element={<TranslatePDF />} />
 
-          <Route path="/tools/edit" element={<ComingSoonTool name="PDF Editor" category="Optimize & Edit" />} />
-          <Route path="/tools/background-color" element={<ComingSoonTool name="Background Color" category="Optimize & Edit" />} />
+          <Route path="/tools/edit" element={<PDFEditor />} />
+          <Route path="/tools/background-color" element={<BackgroundColor />} />
           <Route path="/tools/csv-to-pdf" element={<ComingSoonTool name="CSV to PDF" category="Convert to PDF" />} />
           <Route path="/tools/pdf-to-jpg" element={<ComingSoonTool name="PDF to JPG" category="Convert from PDF" />} />
           <Route path="/tools/pdf-to-word" element={<ComingSoonTool name="PDF to Word" category="Convert from PDF" />} />
