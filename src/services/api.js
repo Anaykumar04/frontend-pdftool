@@ -154,6 +154,20 @@ export const pdfApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })
+  },
+  detectFields: (file) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/detect-fields', form, { headers: { 'Content-Type': 'multipart/form-data' } })
+  },
+  fillForm: (file, data, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('data', JSON.stringify(data))
+    return api.post('/pdf/fill-form', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
   }
 }
 

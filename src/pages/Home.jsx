@@ -13,6 +13,7 @@ const tools = [
   { to: '/tools/jpg-to-pdf',icon: '🖼️', label: 'JPG to PDF',       desc: 'Convert images to PDF documents',       color: 'bg-teal' },
   { to: '/tools/extract-text',icon: '📝', label: 'Extract Text',    desc: 'Get searchable text from PDF',         color: 'bg-purple' },
   { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF',      desc: 'Convert Word to PDF document',         color: 'bg-indigo' },
+  { to: '/tools/fillable-pdf',icon: '🖋️', label: 'Fillable PDF',     desc: 'Convert forms into fillable documents', color: 'bg-teal' },
 ]
 
 const features = [

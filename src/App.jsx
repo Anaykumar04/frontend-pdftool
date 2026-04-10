@@ -25,6 +25,7 @@ import TranslatePDF from './pages/tools/TranslatePDF'
 import PDFEditor from './pages/tools/PDFEditor'
 import BackgroundColor from './pages/tools/BackgroundColor'
 import FileConverter from './pages/tools/FileConverter'
+import FillablePDF from './pages/tools/FillablePDF'
 import ComingSoonTool from './pages/ComingSoonTool'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="/tools/translate-pdf" element={<TranslatePDF />} />
 
           <Route path="/tools/edit" element={<PDFEditor />} />
+          <Route path="/tools/fillable-pdf" element={<FillablePDF />} />
           <Route path="/tools/background-color" element={<BackgroundColor />} />
           <Route path="/tools/csv-to-pdf" element={<ComingSoonTool name="CSV to PDF" category="Convert to PDF" />} />
           <Route path="/tools/pdf-to-jpg" element={<ComingSoonTool name="PDF to JPG" category="Convert from PDF" />} />
