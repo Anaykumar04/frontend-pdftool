@@ -15,7 +15,7 @@ const tools = [
   { to: '/tools/jpg-to-pdf', label: 'JPG to PDF', icon: '🖼️' },
   { to: '/tools/extract-text', label: 'Extract Text', icon: '📝' },
   { to: '/tools/word-to-pdf', label: 'Word to PDF', icon: '📄' },
-  { to: '/tools/fillable-pdf', label: 'Fillable PDF', icon: '🖋️' },
+  { to: '/tools/fillable-pdf', label: 'Bank Form Filler', icon: '🏦' },
 ]
 
 export default function Navbar() {

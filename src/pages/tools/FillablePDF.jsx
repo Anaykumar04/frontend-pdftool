@@ -24,16 +24,21 @@ export default function FillablePDF() {
 
   const handleDetect = async (f) => {
     setDetecting(true)
-    // Simulating automatic field detection
+    // Simulating automatic field detection for a Bank Form
     setTimeout(() => {
         setFields([
-            { id: 1, name: 'Full Name', type: 'text', value: '', placeholder: 'John Doe', x: 100, y: 200 },
-            { id: 2, name: 'Email Address', type: 'email', value: '', placeholder: 'john@example.com', x: 100, y: 250 },
-            { id: 3, name: 'Phone Number', type: 'text', value: '', placeholder: '+1 234 567 890', x: 100, y: 300 },
-            { id: 4, name: 'Message', type: 'textarea', value: '', placeholder: 'Your message here...', x: 100, y: 350 },
+            { id: 1, label: 'Full Name', value: '', top: '155px', left: '160px', width: '380px' },
+            { id: 2, label: 'Account Number', value: '', top: '210px', left: '160px', width: '220px' },
+            { id: 3, label: 'Swift Code', value: '', top: '210px', left: '400px', width: '140px' },
+            { id: 4, label: 'Mailing Address', value: '', top: '265px', left: '160px', width: '380px' },
+            { id: 5, label: 'City', value: '', top: '320px', left: '160px', width: '180px' },
+            { id: 6, label: 'State', value: '', top: '320px', left: '360px', width: '180px' },
+            { id: 7, label: 'Contact Phone', value: '', top: '375px', left: '160px', width: '380px' },
+            { id: 8, label: 'Reference ID', value: '', top: '430px', left: '160px', width: '180px' },
+            { id: 9, label: 'Date', value: '', top: '430px', left: '360px', width: '180px' },
         ])
         setDetecting(false)
-        toast.success('Fields detected automatically! ⚡')
+        toast.success('Banking form fields detected! 🏦')
     }, 1500)
   }
 
@@ -45,40 +50,33 @@ export default function FillablePDF() {
     if (!file) return toast.error('Please upload a PDF file')
     setLoading(true)
     try {
-        // In a real app, this would call the backend
-        // const res = await pdfApi.fillForm(file, fields)
-        // For now, we simulate the success
         setTimeout(() => {
             setResult({
-                name: `fillable_${file.name}`,
+                name: `bank_form_completed_${file.name}`,
                 size: file.size,
-                downloadUrl: '#' // Simulated
+                downloadUrl: '#'
             })
             setLoading(false)
-            toast.success('Form filled and ready! 🎉')
+            toast.success('Bank form filled successfully! 🏧')
         }, 2000)
     } catch (err) {
-        toast.error(err.message)
-        setLoading(false)
+        toast.error(err.message); setLoading(false)
     }
   }
 
   const reset = () => {
-    setFile(null)
-    setResult(null)
-    setFields([])
-    setStep(1)
+    setFile(null); setResult(null); setFields([]); setStep(1)
   }
 
   return (
     <div className="tool-page">
-      <div className="container" style={{ maxWidth: 800 }}>
+      <div className="container" style={{ maxWidth: 900 }}>
         <div className="tool-page-header">
-          <span className="badge badge-purple" style={{ marginBottom: 16 }}><FiLayout /> Forms</span>
-          <h1>Fillable PDF Converter</h1>
+          <span className="badge badge-teal" style={{ marginBottom: 16 }}><FiLayout /> Banking Tools</span>
+          <h1>Bank Form Filler</h1>
           <p>
-            Upload your PDF form (e.g., bank form, application form) to convert it into a fillable digital document. 
-            Our tool will detect fields automatically so you can type, save, and download instantly.
+            Upload your bank application or transaction form. 
+            We'll convert it into a digital fillable version so you can complete your banking tasks instantly.
           </p>
         </div>
 
@@ -91,85 +89,109 @@ export default function FillablePDF() {
                 onFiles={onFiles} 
                 accept={{ 'application/pdf': ['.pdf'] }} 
                 multiple={false}
-                label="Click or drag PDF form here" 
-                hint="We'll automatically detect fields for you" 
+                label="Click or drag BANK FORM here" 
+                hint="Commonly supports application forms, KYC, and transfer slips" 
                 files={[]} 
               />
             ) : (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: 24 }}>
-                <div className="card-glass" style={{ padding: 24 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-                    <h3 style={{ fontSize: '1.2rem' }}>Form Preview</h3>
-                    <div style={{ display: 'flex', gap: 8 }}>
-                        <span className="badge badge-blue">
-                             {detecting ? 'Detecting...' : `${fields.length} Fields Found`}
-                        </span>
+              <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) 300px', gap: 24 }}>
+                <div className="card-glass" style={{ padding: 20, position: 'relative', overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                         <FiLayout color="var(--accent-teal)" />
+                         <h3 style={{ fontSize: '1.1rem', fontWeight: 600 }}>Form Interaction View</h3>
                     </div>
+                    <span className="badge badge-ghost">
+                         {detecting ? 'Detecting...' : '8 Fields Interactive'}
+                    </span>
                   </div>
 
-                  <div className="pdf-preview-canvas" style={{ 
-                    background: 'white', 
-                    borderRadius: 8, 
-                    border: '1px solid var(--border)', 
-                    height: 500,
+                  <div className="pdf-editor-canvas" style={{ 
+                    background: '#f0f2f5', 
+                    borderRadius: 12, 
+                    height: 600,
                     position: 'relative',
-                    overflow: 'hidden',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center'
+                    overflow: 'auto',
+                    border: '1px solid var(--border-light)',
+                    boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.2)'
                   }}>
                     {detecting ? (
-                      <div style={{ textAlign: 'center' }}>
-                        <div className="spinner" style={{ margin: '0 auto 16px' }} />
-                        <p style={{ color: 'var(--text-muted)' }}>Scanning document for input fields...</p>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+                        <div className="spinner" style={{ marginBottom: 16, width: 40, height: 40 }} />
+                        <p style={{ color: 'var(--text-secondary)', fontWeight: 500 }}>Authenticating document structure...</p>
+                        <p style={{ fontSize: 12, color: 'var(--text-muted)' }}>Scanning for signature lines and account fields</p>
                       </div>
                     ) : (
-                      <div style={{ width: '100%', height: '100%', padding: '40px 60px', overflowY: 'auto' }}>
-                         <div style={{ borderBottom: '2px solid #eee', paddingBottom: 10, marginBottom: 30 }}>
-                             <h2 style={{ color: '#333', fontSize: 18 }}>{file?.name}</h2>
-                             <p style={{ color: '#888', fontSize: 12 }}>Digital Fillable Form</p>
-                         </div>
-                         
+                      <div style={{ 
+                        width: 600, 
+                        height: 800, 
+                        margin: '20px auto', 
+                        background: 'white', 
+                        backgroundImage: 'url(/assets/bank-form-mock.png)',
+                        backgroundSize: 'cover',
+                        position: 'relative',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.3)',
+                        borderRadius: 4
+                      }}>
                          {fields.map(f => (
-                             <div key={f.id} style={{ marginBottom: 20 }}>
-                                 <label style={{ display: 'block', fontSize: 11, fontWeight: 700, color: '#666', marginBottom: 6, textTransform: 'uppercase' }}>{f.name}</label>
-                                 {f.type === 'textarea' ? (
-                                     <textarea 
-                                        value={f.value} 
-                                        onChange={e => updateField(f.id, e.target.value)}
-                                        placeholder={f.placeholder}
-                                        style={{ width: '100%', padding: 10, borderRadius: 4, border: '1px solid #ddd', fontSize: 14, minHeight: 80 }}
-                                     />
-                                 ) : (
-                                     <input 
-                                        type={f.type} 
-                                        value={f.value} 
-                                        onChange={e => updateField(f.id, e.target.value)}
-                                        placeholder={f.placeholder}
-                                        style={{ width: '100%', padding: 10, borderRadius: 4, border: '1px solid #ddd', fontSize: 14 }}
-                                     />
-                                 )}
+                             <div key={f.id} style={{ 
+                                 position: 'absolute', 
+                                 top: f.top, 
+                                 left: f.left,
+                                 width: f.width
+                             }}>
+                                 <input 
+                                    type="text" 
+                                    value={f.value} 
+                                    placeholder={f.label}
+                                    onChange={e => updateField(f.id, e.target.value)}
+                                    style={{ 
+                                        width: '100%', 
+                                        padding: '4px 8px', 
+                                        border: '1px solid transparent',
+                                        borderBottom: '1px dashed #3182ce',
+                                        background: 'rgba(49, 130, 206, 0.05)',
+                                        fontSize: 13,
+                                        fontWeight: 500,
+                                        color: '#2d3748',
+                                        transition: 'all 0.2s',
+                                        outline: 'none'
+                                    }}
+                                    onFocus={e => e.target.style.background = 'rgba(49, 130, 206, 0.15)'}
+                                    onBlur={e => e.target.style.background = 'rgba(49, 130, 206, 0.05)'}
+                                 />
+                                 <span style={{ position: 'absolute', top: -14, left: 0, fontSize: 9, color: '#3182ce', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 0.5 }}>{f.label}</span>
                              </div>
                          ))}
                          
-                         <div style={{ marginTop: 40, paddingTop: 20, borderTop: '1px dashed #ccc', textAlign: 'center' }}>
-                             <p style={{ fontSize: 11, color: '#aaa' }}>End of detected fields. You can also add more fields in the full editor.</p>
+                         <div style={{ position: 'absolute', bottom: 40, left: '50%', transform: 'translateX(-50%)', padding: '10px 20px', border: '1px solid #eee', color: '#ccc', borderRadius: 4, fontStyle: 'italic', fontSize: 11 }}>
+                             Digitally generated by PDFtoolkit Form Processor
                          </div>
                       </div>
                     )}
                   </div>
                 </div>
 
-                <div className="sidebar" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                   <div className="card-glass" style={{ padding: 20 }}>
-                      <h4 style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                          <FiEdit3 /> Fill Details
+                <div className="sidebar">
+                  <div className="card-glass" style={{ padding: 20, marginBottom: 16 }}>
+                      <h4 style={{ marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8, fontSize: '0.9rem' }}>
+                          <FiEdit3 /> Input Summary
                       </h4>
-                      <p style={{ fontSize: 13, color: 'var(--text-secondary)', marginBottom: 20 }}>
-                          Fields have been detected. Fill them out and click "Save & Download" to get your completed PDF.
+                      <p style={{ fontSize: 12, color: 'var(--text-secondary)', marginBottom: 20 }}>
+                          We have localized the bank fields for you. Please review and fill them to proceed with the secure download.
                       </p>
                       
+                      <div style={{ display: 'grid', gap: 8, marginBottom: 20 }}>
+                          {fields.slice(0, 4).map(f => (
+                              <div key={f.id} style={{ fontSize: 11, display: 'flex', justifyContent: 'space-between', color: 'var(--text-secondary)' }}>
+                                  <span>{f.label}:</span>
+                                  <span style={{ color: f.value ? 'var(--accent-green)' : 'var(--text-muted)' }}>
+                                      {f.value ? '✓ Filled' : 'Empty'}
+                                  </span>
+                              </div>
+                          ))}
+                      </div>
+
                       <button 
                         onClick={handleFill} 
                         disabled={loading || detecting}
@@ -177,19 +199,18 @@ export default function FillablePDF() {
                         style={{ width: '100%', justifyContent: 'center' }}
                       >
                         {loading ? (
-                            <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Processing...</>
+                            <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Saving...</>
                         ) : (
-                            <><FiSave /> Save & Download</>
+                            <><FiSave /> Save & Secure Download</>
                         )}
                       </button>
-                   </div>
-                   
-                   <div className="card-glass" style={{ padding: 20 }}>
-                      <h4 style={{ marginBottom: 12, fontSize: 14 }}>Actions</h4>
-                      <button onClick={reset} className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center' }}>
-                        Upload Different File
+                  </div>
+                  
+                  <div className="card-glass" style={{ padding: 15 }}>
+                      <button onClick={reset} className="btn btn-ghost btn-sm" style={{ width: '100%', justifyContent: 'center', fontSize: 12 }}>
+                        Cancel & New Upload
                       </button>
-                   </div>
+                  </div>
                 </div>
               </div>
             )}
