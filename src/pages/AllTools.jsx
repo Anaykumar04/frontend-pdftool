@@ -17,7 +17,7 @@ const allTools = [
       { to: '/tools/compress', icon: '📦', label: 'Compress PDF', desc: 'Reduce PDF file size without losing quality', color: 'bg-green' },
       { to: '/tools/rotate', icon: '🔄', label: 'Rotate PDF', desc: 'Rotate all or specific pages', color: 'bg-cyan' },
       { to: '/tools/edit', icon: '✏️', label: 'PDF Editor', desc: 'Edit PDF text and elements online', color: 'bg-purple' },
-      { to: '/tools/fillable-pdf', icon: '🏦', label: 'Bank Form Filler', desc: 'Convert bank forms into fillable digital documents', color: 'bg-teal' },
+      { to: '/tools/fillable-pdf', icon: '🔍', label: 'PDF Form Scanner', desc: 'Real-time AI scanning to detect and fill form fields', color: 'bg-indigo' },
       { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change the background color of pages', color: 'bg-pink' },
     ]
   },
