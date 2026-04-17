@@ -14,7 +14,12 @@ api.interceptors.request.use(config => {
 api.interceptors.response.use(
   res => res,
   err => {
-    const msg = err.response?.data?.error || err.message || 'Something went wrong'
+    let msg = 'Something went wrong'
+    if (err.response?.data?.error) {
+      msg = typeof err.response.data.error === 'string' ? err.response.data.error : JSON.stringify(err.response.data.error)
+    } else if (err.message) {
+      msg = err.message
+    }
     return Promise.reject(new Error(msg))
   }
 )
