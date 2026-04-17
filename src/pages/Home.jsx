@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import api from '../services/api'
 
 const tools = [
   { to: '/tools/merge',    icon: '🔗', label: 'Merge PDF',      desc: 'Combine multiple PDFs into one',       color: 'bg-purple' },
@@ -35,9 +36,26 @@ const faqs = [
 
 export default function Home() {
   const [openFaq, setOpenFaq] = useState(null)
+  const [apiStatus, setApiStatus] = useState('checking')
+  const [errorInfo, setErrorInfo] = useState('')
+
+  useEffect(() => {
+    api.get('/health')
+      .then(res => setApiStatus('ok'))
+      .catch(err => {
+        setApiStatus('error');
+        setErrorInfo(err.message || 'Network Error');
+      })
+  }, [])
 
   return (
     <>
+      {apiStatus === 'error' && (
+        <div style={{ background: '#fee2e2', color: '#991b1b', padding: '16px 20px', textAlign: 'center', borderBottom: '1px solid #f87171', zIndex: 1000, position: 'relative' }}>
+          <strong>⚠️ Backend Connection Failed:</strong> {errorInfo}. 
+          If you are on Vercel, please ensure you deployed the <strong>Root Directory</strong> and not just the frontend folder.
+        </div>
+      )}
       {/* HERO */}
       <section className="hero">
         <div className="hero-bg">
