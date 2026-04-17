@@ -25,10 +25,10 @@ export default function FillablePDF() {
   const pageRef = useRef(null)
 
   const onFiles = useCallback((fs) => {
-    const pdf = fs.find(f => f.type === 'application/pdf' || f.name.endsWith('.pdf'))
-    if (!pdf) return toast.error('Please select a valid PDF file')
-    setFile(pdf)
-    setFileUrl(URL.createObjectURL(pdf))
+    const file = fs[0]
+    if (!file) return toast.error('Please select a valid file (PDF, Image, or DOCX)')
+    setFile(file)
+    setFileUrl(URL.createObjectURL(file))
     setResult(null)
     setStep(2)
     startSimulatedScan()
@@ -94,11 +94,11 @@ export default function FillablePDF() {
       <div className="container" style={{ maxWidth: 1200 }}>
         <div className="tool-page-header">
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="badge badge-indigo" style={{ marginBottom: 16 }}><FiLayout /> Image & Scanned Form Processor</span>
-            <h1>Real-Time PDF Form Filler</h1>
+            <span className="badge badge-indigo" style={{ marginBottom: 16 }}><FiLayout /> Any Document to Real PDF Form</span>
+            <h1>Real-Time Digital Form Creator</h1>
             <p>
-              Upload any PDF (even scanned paper photos!). Click anywhere on the document to add digital text, 
-              and we will permanently <strong>burn</strong> it into a high-quality PDF replica.
+              Upload any Document (PDF, Image, DOCX). Click anywhere to add fields, 
+              and we will convert them into <strong>Real Interactive PDF Text Fields</strong> so anyone can fill them out!.
             </p>
           </motion.div>
         </div>
@@ -107,9 +107,9 @@ export default function FillablePDF() {
           {step === 1 ? (
             <DropZone 
               onFiles={onFiles} 
-              accept={{ 'application/pdf': ['.pdf'] }} 
+              accept={{ 'application/pdf': ['.pdf'], 'image/*': ['.png', '.jpg', '.jpeg'], 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'] }} 
               multiple={false}
-              label="Click or drag scanned PDF here" 
+              label="Click or drag any document (PDF, Image, DOCX) here" 
               hint="Perfect for scanned bank forms, invoices, and physical documents" 
               files={[]} 
             />
