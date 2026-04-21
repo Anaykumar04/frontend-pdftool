@@ -7,9 +7,11 @@ export default function ResultPanel({ result, onReset, extraInfo }) {
   const isArray = Array.isArray(result.outputs)
 
   const handleShare = () => {
-    const url = window.location.origin + (isArray ? result.outputs[0].url : result.output.url)
-    navigator.clipboard.writeText(url)
-    toast.success('Download link copied to clipboard!')
+    const fileUrl = isArray ? result.outputs[0].url : result.output.url;
+    const filename = fileUrl.split('/').pop();
+    const downloadUrl = `${window.location.origin}/download/${filename}`;
+    navigator.clipboard.writeText(downloadUrl);
+    toast.success('Download link copied to clipboard!');
   }
 
   return (
@@ -66,7 +68,7 @@ export default function ResultPanel({ result, onReset, extraInfo }) {
           
           {!isArray && result.output?.url && (
             <div className="result-url-box">
-              <span className="result-url-text">{window.location.origin + result.output.url}</span>
+              <span className="result-url-text">{window.location.origin}/download/{result.output.url.split('/').pop()}</span>
               <button className="btn-copy-sm" onClick={handleShare}>Copy</button>
             </div>
           )}
