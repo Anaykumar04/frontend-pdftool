@@ -187,4 +187,8 @@ export const historyApi = {
   delete: (id) => api.delete(`/history/${id}`)
 }
 
+export const adminApi = {
+  getStats: () => api.get('/admin/stats')
+}
+
 export default api
