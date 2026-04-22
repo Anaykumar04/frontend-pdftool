@@ -85,7 +85,9 @@ export default function Profile() {
                   await updateProfile({ avatar: res.data.secure_url });
                   toast.success('Photo updated!', { id: t });
                 } catch (err) {
-                  toast.error('Failed to upload photo', { id: t });
+                  console.error('Upload error:', err);
+                  const msg = err.response?.data?.error || 'Failed to upload photo. Please check Cloudinary config.';
+                  toast.error(msg, { id: t });
                 }
               }}
             />
