@@ -54,17 +54,31 @@ export default function Profile() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
           <div style={{ background: 'white', borderRadius: 24, padding: 32, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
             <div 
-              style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px', borderRadius: '50%', overflow: 'hidden', border: '4px solid #f8fafc', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', cursor: 'pointer' }}
+              style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px', borderRadius: '50%', overflow: 'hidden', border: '4px solid #f8fafc', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', cursor: 'pointer', background: '#f1f5f9' }}
               onClick={() => document.getElementById('avatarInput').click()}
               title="Click to change photo"
             >
               {user.avatar ? (
-                <img src={user.avatar} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #6366f1, #a855f7)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem', fontWeight: 700 }}>
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-              )}
+                <img 
+                  src={user.avatar} 
+                  alt="" // Remove name as alt to prevent it showing up if image fails
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div style={{ 
+                width: '100%', height: '100%', 
+                background: 'linear-gradient(135deg, #6366f1, #a855f7)', 
+                color: 'white', 
+                display: user.avatar ? 'none' : 'flex', 
+                alignItems: 'center', justifyContent: 'center', 
+                fontSize: '3rem', fontWeight: 700 
+              }}>
+                {user.name.charAt(0).toUpperCase()}
+              </div>
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.5)', color: 'white', fontSize: '0.65rem', padding: '4px 0', textAlign: 'center', opacity: 0, transition: 'opacity 0.2s' }} onMouseOver={e => e.currentTarget.style.opacity = 1} onMouseOut={e => e.currentTarget.style.opacity = 0}>
                 Change
               </div>
