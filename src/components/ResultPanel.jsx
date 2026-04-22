@@ -8,9 +8,9 @@ export default function ResultPanel({ result, onReset, extraInfo }) {
 
   const handleShare = () => {
     const fileUrl = isArray ? result.outputs[0].url : result.output.url;
-    const filename = fileUrl.split('/').pop();
-    const downloadUrl = `${window.location.origin}/download/${filename}`;
-    navigator.clipboard.writeText(downloadUrl);
+    // If it's a Cloudinary URL, use it directly. Otherwise use local fallback.
+    const shareUrl = fileUrl.startsWith('http') ? fileUrl : `${window.location.origin}${fileUrl}`;
+    navigator.clipboard.writeText(shareUrl);
     toast.success('Download link copied to clipboard!');
   }
 
@@ -68,7 +68,9 @@ export default function ResultPanel({ result, onReset, extraInfo }) {
           
           {!isArray && result.output?.url && (
             <div className="result-url-box">
-              <span className="result-url-text">{window.location.origin}/download/{result.output.url.split('/').pop()}</span>
+              <span className="result-url-text" style={{ fontSize: '0.75rem' }}>
+                {result.output.url.startsWith('http') ? result.output.url : `${window.location.origin}${result.output.url}`}
+              </span>
               <button className="btn-copy-sm" onClick={handleShare}>Copy</button>
             </div>
           )}

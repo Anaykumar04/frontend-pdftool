@@ -37,9 +37,19 @@ export const getOperationLabel = (op) => {
 }
 
 export const downloadFile = (url, filename) => {
+  let downloadUrl = url
+  // If it's a Cloudinary URL, inject fl_attachment to force download
+  if (url.includes('cloudinary.com') && !url.includes('fl_attachment')) {
+    if (url.includes('/upload/')) {
+      downloadUrl = url.replace('/upload/', '/upload/fl_attachment/')
+    } else if (url.includes('/raw/upload/')) {
+      downloadUrl = url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+    }
+  }
   const a = document.createElement('a')
-  a.href = url
+  a.href = downloadUrl
   a.download = filename || 'download'
+  a.target = '_blank' // Fallback for cross-origin
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)

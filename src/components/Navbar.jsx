@@ -41,9 +41,6 @@ export default function Navbar() {
             <NavLink to="/" end className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
               Home
             </NavLink>
-            <NavLink to="/quick-upload" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
-              Quick Upload
-            </NavLink>
 
             {/* Tools dropdown */}
             <div style={{ position: 'relative' }}
