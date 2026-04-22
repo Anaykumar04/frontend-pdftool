@@ -16,9 +16,13 @@ export default function Register() {
     if (form.password !== form.confirm) return toast.error('Passwords do not match')
     setLoading(true)
     try {
-      await register(form.name, form.email, form.password)
+      const u = await register(form.name, form.email, form.password)
       toast.success('Account created! Welcome 🎉')
-      navigate('/dashboard')
+      if (u?.role === 'admin') {
+        navigate('/dashboard')
+      } else {
+        navigate('/profile')
+      }
     } catch (err) {
       toast.error(err.message || 'Registration failed')
     } finally { setLoading(false) }
@@ -27,19 +31,25 @@ export default function Register() {
   const handleGoogleAuth = async () => {
     setLoading(true)
     try {
-      // Simulated Google Auth for demo purposes since no client ID was provided
-      const email = 'google_user@example.com'
+      // Simulated Google Auth
+      const email = 'anay_kumar@gmail.com'
+      const name = 'Anay Kumar'
       const password = 'google_demo_password_123'
+      
+      let authenticatedUser;
       try {
-        await register('Google User', email, password)
+        authenticatedUser = await register(name, email, password)
       } catch (err) {
-        // If register fails (e.g. user exists), just login
         if (login) {
-          await login(email, password)
+          authenticatedUser = await login(email, password)
         }
       }
       toast.success('Successfully authenticated with Google! 🎉')
-      navigate('/dashboard')
+      if (authenticatedUser?.role === 'admin') {
+        navigate('/dashboard')
+      } else {
+        navigate('/profile')
+      }
     } catch (err) {
       toast.error('Google authentication failed')
     } finally { setLoading(false) }

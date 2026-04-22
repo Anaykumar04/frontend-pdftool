@@ -1,4 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import toast from 'react-hot-toast'
 
 const allTools = [
   {
@@ -16,8 +18,8 @@ const allTools = [
     tools: [
       { to: '/tools/compress', icon: '📦', label: 'Compress PDF', desc: 'Reduce PDF file size without losing quality', color: 'bg-green' },
       { to: '/tools/rotate', icon: '🔄', label: 'Rotate PDF', desc: 'Rotate all or specific pages', color: 'bg-cyan' },
-      { to: '/tools/edit', icon: '✏️', label: 'PDF Editor', desc: 'Edit PDF text and elements online', color: 'bg-purple' },
-      { to: '/tools/fillable-pdf', icon: '🔍', label: 'PDF Form Scanner', desc: 'Real-time AI scanning to detect and fill form fields', color: 'bg-indigo' },
+      { to: '/tools/edit', icon: '✏️', label: 'PDF Editor', desc: 'Edit PDF text and elements online', color: 'bg-purple', isPro: true },
+      { to: '/tools/fillable-pdf', icon: '🔍', label: 'PDF Form Scanner', desc: 'Real-time AI scanning to detect and fill form fields', color: 'bg-indigo', isPro: true },
       { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change the background color of pages', color: 'bg-pink' },
     ]
   },
@@ -26,8 +28,8 @@ const allTools = [
     tools: [
       { to: '/tools/watermark', icon: '💧', label: 'Watermark PDF', desc: 'Add text watermarks to every page', color: 'bg-orange' },
       { to: '/tools/protect', icon: '🔒', label: 'Protect PDF', desc: 'Secure PDF with protection settings', color: 'bg-red' },
-      { to: '/tools/sign', icon: '✍️', label: 'E-Sign PDF', desc: 'Sign with typed, drawn, or image signatures', color: 'bg-teal' },
-      { to: '/tools/add-stamp', icon: '💮', label: 'Official Stamp', desc: 'Apply specialized office rubber stamps', color: 'bg-purple' },
+      { to: '/tools/sign', icon: '✍️', label: 'E-Sign PDF', desc: 'Sign with typed, drawn, or image signatures', color: 'bg-teal', isPro: true },
+      { to: '/tools/add-stamp', icon: '💮', label: 'Official Stamp', desc: 'Apply specialized office rubber stamps', color: 'bg-purple', isPro: true },
     ]
   },
   {
@@ -45,15 +47,26 @@ const allTools = [
     category: 'Convert from PDF',
     tools: [
       { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
-      { to: '/tools/pdf-to-word', icon: '📘', label: 'PDF to Word', desc: 'Convert PDF to editable Word document', color: 'bg-blue' },
-      { to: '/tools/ocr', icon: '👁️', label: 'OCR PDF', desc: 'Make scanned PDFs searchable/editable', color: 'bg-pink' },
+      { to: '/tools/pdf-to-word', icon: '📘', label: 'PDF to Word', desc: 'Convert PDF to editable Word document', color: 'bg-blue', isPro: true },
+      { to: '/tools/ocr', icon: '👁️', label: 'OCR PDF', desc: 'Make scanned PDFs searchable/editable', color: 'bg-pink', isPro: true },
       { to: '/tools/extract-images', icon: '🖼️', label: 'Extract Images', desc: 'Save all images from PDF as a ZIP', color: 'bg-teal' },
-      { to: '/tools/translate-pdf', icon: '🌍', label: 'Translate PDF', desc: 'Translate PDF to any language', color: 'bg-indigo' },
+      { to: '/tools/translate-pdf', icon: '🌍', label: 'Translate PDF', desc: 'Translate PDF to any language', color: 'bg-indigo', isPro: true },
     ]
   },
 ]
 
 export default function AllTools() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
+  const handleToolClick = (e, t) => {
+    if (t.isPro && (!user || user.plan === 'free')) {
+      e.preventDefault()
+      toast.error('This is a PRO tool! Please upgrade your plan.')
+      navigate('/pricing')
+    }
+  }
+
   return (
     <div className="section">
       <div className="container">
@@ -71,7 +84,10 @@ export default function AllTools() {
             </div>
             <div className="tools-grid">
               {cat.tools.map((t) => (
-                <Link key={t.to} to={t.to} className="tool-card">
+                <Link key={t.to} to={t.to} className="tool-card" onClick={(e) => handleToolClick(e, t)}>
+                  {t.isPro && (
+                    <div style={{ position: 'absolute', top: 12, right: 12, background: 'var(--accent-orange)', color: 'white', padding: '2px 8px', borderRadius: 6, fontSize: '0.65rem', fontWeight: 800, zIndex: 2 }}>PRO</div>
+                  )}
                   <div className={`tool-icon-wrap ${t.color}`}>{t.icon}</div>
                   <div className="tool-card-name">{t.label}</div>
                   <div className="tool-card-desc">{t.desc}</div>

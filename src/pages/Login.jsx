@@ -14,9 +14,13 @@ export default function Login() {
     if (!form.email || !form.password) return toast.error('Please fill all fields')
     setLoading(true)
     try {
-      await login(form.email, form.password)
+      const u = await login(form.email, form.password)
       toast.success('Welcome back! 🎉')
-      navigate('/dashboard')
+      if (u?.role === 'admin') {
+        navigate('/dashboard')
+      } else {
+        navigate('/profile')
+      }
     } catch (err) {
       toast.error(err.message || 'Login failed')
     } finally { setLoading(false) }
@@ -25,19 +29,26 @@ export default function Login() {
   const handleGoogleAuth = async () => {
     setLoading(true)
     try {
-      // Simulated Google Auth for demo purposes since no client ID was provided
-      const email = 'google_user@example.com'
+      // Simulated Google Auth
+      const email = 'anay_kumar@gmail.com'
+      const name = 'Anay Kumar' // Extracted from "Gmail"
       const password = 'google_demo_password_123'
+      
+      let authenticatedUser;
       try {
-        await login(email, password)
+        authenticatedUser = await login(email, password)
       } catch (err) {
-        // If login fails, try to register the mock user via the API directly
         if (register) {
-          await register('Google User', email, password)
+          authenticatedUser = await register(name, email, password)
         }
       }
+      
       toast.success('Successfully authenticated with Google! 🎉')
-      navigate('/dashboard')
+      if (authenticatedUser?.role === 'admin') {
+        navigate('/dashboard')
+      } else {
+        navigate('/profile')
+      }
     } catch (err) {
       toast.error('Google authentication failed')
     } finally { setLoading(false) }

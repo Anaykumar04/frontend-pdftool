@@ -41,6 +41,9 @@ export default function Navbar() {
             <NavLink to="/" end className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
               Home
             </NavLink>
+            <NavLink to="/quick-upload" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`}>
+              Quick Upload
+            </NavLink>
 
             {/* Tools dropdown */}
             <div style={{ position: 'relative' }}
@@ -78,7 +81,7 @@ export default function Navbar() {
           <div className="navbar-actions">
             {isAuth ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Link to="/dashboard" className="btn btn-ghost btn-sm">
+                <Link to={user?.role === 'admin' ? "/dashboard" : "/profile"} className="btn btn-ghost btn-sm">
                   <FiUser size={14} /> {user?.name?.split(' ')[0]}
                 </Link>
                 <button onClick={handleLogout} className="btn btn-outline btn-sm">
@@ -110,7 +113,7 @@ export default function Navbar() {
         <div style={{ height: 1, background: 'var(--border-light)', margin: '8px 0' }} />
         {isAuth ? (
           <>
-            <Link to="/dashboard" className="mobile-nav-link" onClick={() => setMenuOpen(false)}>👤 Dashboard</Link>
+            <Link to={user?.role === 'admin' ? "/dashboard" : "/profile"} className="mobile-nav-link" onClick={() => setMenuOpen(false)}>👤 {user?.role === 'admin' ? 'Dashboard' : 'Profile'}</Link>
             <button onClick={() => { handleLogout(); setMenuOpen(false) }} className="btn btn-outline" style={{ marginTop: 8 }}>Logout</button>
           </>
         ) : (

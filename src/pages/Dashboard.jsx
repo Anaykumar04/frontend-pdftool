@@ -35,49 +35,49 @@ export default function Dashboard() {
   if (!stats) return null;
 
   return (
-    <div style={{ display: 'flex', background: '#f8fafc', minHeight: 'calc(100vh - 64px)', color: '#0f172a' }}>
+    <div className="dashboard-container" style={{ display: 'flex', background: '#f8fafc', minHeight: 'calc(100vh - 64px)', color: '#0f172a' }}>
       
       {/* Sidebar Overlay (Dark Theme for Sidebar as in image) */}
-      <div style={{ width: 260, background: '#111827', color: '#f8fafc', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div className="admin-sidebar" style={{ width: 260, background: '#111827', color: '#f8fafc', display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.3s ease' }}>
         <div style={{ padding: '24px 20px', fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ background: '#ef4444', color: 'white', padding: '4px 8px', borderRadius: 6, fontSize: '0.9rem' }}>PDF</div>
-          Toolkit
+          <span className="sidebar-label">Toolkit</span>
         </div>
 
         <div style={{ padding: '20px 16px', flex: 1, overflowY: 'auto' }}>
           <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: '#4f46e5', color: 'white', borderRadius: 8, textDecoration: 'none', fontWeight: 500, marginBottom: 24 }}>
-            <span>🏠</span> Dashboard
+            <span>🏠</span> <span className="sidebar-label">Dashboard</span>
           </Link>
 
-          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>MANAGEMENT</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>MANAGEMENT</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 24 }}>
             {[{i:'👥', l:'Users'}, {i:'📄', l:'Files'}, {i:'📊', l:'Tools Usage'}, {i:'💳', l:'Transactions'}].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
-                <span>{item.i}</span> {item.l}
+                <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
           </div>
 
-          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SYSTEM</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SYSTEM</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 24 }}>
             {[{i:'💾', l:'Storage'}, {i:'⚙️', l:'Settings'}, {i:'🛡️', l:'Security'}, {i:'📝', l:'Activity Logs'}].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
-                <span>{item.i}</span> {item.l}
+                <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
           </div>
 
-          <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SUPPORT</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SUPPORT</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {[{i:'🎧', l:'Help & Support'}, {i:'📈', l:'Reports'}].map((item, i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
-                <span>{item.i}</span> {item.l}
+                <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
           </div>
         </div>
 
-        <div style={{ padding: '20px' }}>
+        <div className="sidebar-label" style={{ padding: '20px' }}>
           <div style={{ background: 'linear-gradient(135deg, #312e81, #1e1b4b)', borderRadius: 12, padding: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>👑</div>
             <div style={{ fontWeight: 600, marginBottom: 4 }}>Upgrade to Pro</div>
@@ -88,30 +88,25 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, padding: '32px 40px', overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
+      <div style={{ flex: 1, padding: 'clamp(16px, 4vw, 40px)', overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
         
         {/* Top Navbar Area Simulation */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, flexWrap: 'wrap', gap: 20 }}>
           <div>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>Dashboard</h1>
             <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
               Welcome back, {user?.name?.split(' ')[0] || 'Admin'}! Here's what's happening with your PDF Toolkit.
             </p>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-            <div style={{ position: 'relative' }}>
-              <input type="text" placeholder="Search anything..." style={{ padding: '8px 16px 8px 36px', borderRadius: 20, border: '1px solid #e2e8f0', background: 'white', width: 250, outline: 'none' }} />
-              <span style={{ position: 'absolute', left: 12, top: 9, color: '#94a3b8' }}>🔍</span>
-            </div>
-            <div style={{ position: 'relative', cursor: 'pointer' }}>
-              🔔
-              <span style={{ position: 'absolute', top: -4, right: -4, background: '#ef4444', color: 'white', fontSize: '0.6rem', padding: '2px 4px', borderRadius: '50%', fontWeight: 'bold' }}>5</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
+            <div style={{ position: 'relative', display: 'none' /* Hide search on mobile if needed */ }}>
+              {/* Optional: Add @media query logic here if using external CSS, but for inline: */}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>
                 {user?.name?.charAt(0).toUpperCase() || 'A'}
               </div>
-              <div>
+              <div className="admin-info-desktop">
                 <div style={{ fontWeight: 600, fontSize: '0.9rem', color: '#0f172a' }}>{user?.name || 'Admin User'}</div>
                 <div style={{ fontSize: '0.75rem', color: '#64748b' }}>Super Admin</div>
               </div>
@@ -120,7 +115,7 @@ export default function Dashboard() {
         </div>
 
         {/* 4 Top Cards */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '20px', marginBottom: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
           <div style={{ background: 'white', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
             <div style={{ background: '#f3e8ff', color: '#a855f7', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>👥</div>
@@ -173,7 +168,7 @@ export default function Dashboard() {
         </div>
 
         {/* Charts Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr', gap: '20px', marginBottom: '24px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
           {/* Line Chart */}
           <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', height: 350, display: 'flex', flexDirection: 'column' }}>
@@ -266,7 +261,7 @@ export default function Dashboard() {
         </div>
 
         {/* Bottom Row */}
-        <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
           
           {/* Recent Files Table */}
           <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', overflowX: 'auto' }}>

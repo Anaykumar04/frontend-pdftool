@@ -14,6 +14,9 @@ import AllTools from './pages/AllTools'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Profile from './pages/Profile'
+import QuickUpload from './pages/QuickUpload'
+import Pricing from './pages/Pricing'
 import ImageToPDF from './pages/tools/ImageToPDF'
 import ExtractText from './pages/tools/ExtractText'
 import WordToPDF from './pages/tools/WordToPDF'
@@ -75,7 +78,10 @@ export default function App() {
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+          <Route path="/dashboard" element={<PrivateRoute adminOnly><Dashboard /></PrivateRoute>} />
+          <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="/quick-upload" element={<PrivateRoute><QuickUpload /></PrivateRoute>} />
+          <Route path="/pricing" element={<Pricing />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
