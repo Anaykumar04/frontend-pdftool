@@ -47,12 +47,18 @@ export default function Profile() {
   if (!user) return null
 
   return (
-    <div className="profile-page" style={{ padding: '40px 20px', maxWidth: 1200, margin: '0 auto', color: 'var(--text-primary)' }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 40 }}>
+    <div className="profile-page" style={{ position: 'relative', overflow: 'hidden', padding: '40px 20px', minHeight: 'calc(100vh - 64px)', color: 'var(--text-primary)' }}>
+      {/* Background orbs for glassmorphism */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'var(--accent-purple)', filter: 'blur(150px)', opacity: 0.15, top: '-10%', left: '-5%' }} />
+        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'var(--accent-cyan)', filter: 'blur(150px)', opacity: 0.1, bottom: '-20%', right: '-10%' }} />
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 40, maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
 
         {/* Profile Card */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
             <div
               style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px', borderRadius: '50%', overflow: 'hidden', border: '4px solid #f8fafc', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', cursor: 'pointer', background: '#f1f5f9' }}
               onClick={() => document.getElementById('avatarInput').click()}
@@ -152,7 +158,7 @@ export default function Profile() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
 
           {editing ? (
-            <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 40, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
+            <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 24, padding: 40, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 24 }}>Update Account Information</h3>
               <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
@@ -162,7 +168,7 @@ export default function Profile() {
                       type="text"
                       value={formData.name}
                       onChange={e => setFormData({ ...formData, name: e.target.value })}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-secondary)', outline: 'none', color: 'var(--text-primary)', fontWeight: 500 }}
                     />
                   </div>
                   <div>
@@ -171,7 +177,7 @@ export default function Profile() {
                       type="email"
                       value={formData.email}
                       onChange={e => setFormData({ ...formData, email: e.target.value })}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-secondary)', outline: 'none', color: 'var(--text-primary)', fontWeight: 500 }}
                     />
                   </div>
                 </div>
@@ -182,7 +188,7 @@ export default function Profile() {
                     placeholder="https://example.com/photo.jpg"
                     value={formData.avatar}
                     onChange={e => setFormData({ ...formData, avatar: e.target.value })}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-secondary)', outline: 'none', color: 'var(--text-primary)', fontWeight: 500 }}
                   />
                 </div>
                 <div>
@@ -191,7 +197,7 @@ export default function Profile() {
                     rows="3"
                     value={formData.address}
                     onChange={e => setFormData({ ...formData, address: e.target.value })}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', resize: 'none', color: '#1e293b', fontWeight: 500 }}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid var(--border)', background: 'var(--bg-secondary)', outline: 'none', resize: 'none', color: 'var(--text-primary)', fontWeight: 500 }}
                   />
                 </div>
                 <button type="submit" style={{ padding: '14px', borderRadius: 12, border: 'none', background: 'var(--accent-cyan)', color: 'white', fontWeight: 700, cursor: 'pointer', marginTop: 10 }}>
@@ -203,17 +209,17 @@ export default function Profile() {
             <>
               {/* Stats Overview */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
-                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
+                <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>📄</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{history.length}</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Files Processed</div>
                 </div>
-                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
+                <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>⚡</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{user.plan === 'free' ? 'Basic' : 'Priority'}</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Processing Speed</div>
                 </div>
-                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
+                <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🛡️</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>Secure</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Cloud Storage</div>
@@ -221,7 +227,7 @@ export default function Profile() {
               </div>
 
               {/* Recent Activity */}
-              <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)', flex: 1 }}>
+              <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)', flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Files</h3>
                   <button style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontWeight: 600, cursor: 'pointer' }}>View All</button>

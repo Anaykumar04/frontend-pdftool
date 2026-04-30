@@ -42,10 +42,16 @@ export default function Dashboard() {
   if (!stats) return null;
 
   return (
-    <div className="dashboard-container" style={{ display: 'flex', background: 'var(--bg-primary)', minHeight: 'calc(100vh - 64px)', color: 'var(--text-primary)' }}>
+    <div className="dashboard-container" style={{ display: 'flex', background: 'var(--bg-primary)', minHeight: 'calc(100vh - 64px)', color: 'var(--text-primary)', position: 'relative', overflow: 'hidden' }}>
+      
+      {/* Background orbs for glassmorphism */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0 }}>
+        <div style={{ position: 'absolute', width: '500px', height: '500px', borderRadius: '50%', background: 'var(--accent-purple)', filter: 'blur(150px)', opacity: 0.15, top: '-10%', right: '-5%' }} />
+        <div style={{ position: 'absolute', width: '600px', height: '600px', borderRadius: '50%', background: 'var(--accent-cyan)', filter: 'blur(150px)', opacity: 0.1, bottom: '-20%', left: '-10%' }} />
+      </div>
       
       {/* Sidebar Overlay (Dark Theme for Sidebar as in image) */}
-      <div className="admin-sidebar" style={{ width: 260, background: 'linear-gradient(180deg, var(--navbar-bg), var(--navbar-light))', color: 'white', display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.3s ease' }}>
+      <div className="admin-sidebar" style={{ width: 260, background: 'rgba(15, 23, 42, 0.4)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRight: '1px solid rgba(255, 255, 255, 0.05)', color: 'white', display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.3s ease', zIndex: 1 }}>
         <div style={{ padding: '24px 20px', fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
           <div style={{ background: 'var(--navbar-light)', color: 'white', padding: '4px 8px', borderRadius: 6, fontSize: '0.9rem' }}>PDF</div>
           <span className="sidebar-label">Toolkit</span>
@@ -95,7 +101,7 @@ export default function Dashboard() {
       </div>
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, padding: 'clamp(16px, 4vw, 40px)', overflowY: 'auto', height: 'calc(100vh - 64px)' }}>
+      <div style={{ flex: 1, padding: 'clamp(16px, 4vw, 40px)', overflowY: 'auto', height: 'calc(100vh - 64px)', zIndex: 1, position: 'relative' }}>
         
         {/* Top Navbar Area Simulation */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, flexWrap: 'wrap', gap: 20 }}>
@@ -123,7 +129,7 @@ export default function Dashboard() {
             {/* 4 Top Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: 'rgba(168, 85, 247, 0.1)', color: '#a855f7', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>👥</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Users</div>
@@ -135,7 +141,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📄</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Files Processed</div>
@@ -147,7 +153,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📈</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Conversions</div>
@@ -159,7 +165,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>💾</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Storage Used</div>
@@ -177,7 +183,7 @@ export default function Dashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
           {/* Line Chart */}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>Files Processed Overview</h3>
               <select style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid var(--border)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '0.85rem', outline: 'none' }}>
@@ -188,40 +194,46 @@ export default function Dashboard() {
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={stats.filesProcessedOverview}>
                   <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} dy={10} />
-                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: 'var(--text-secondary)' }} dx={-10} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#cbd5e1' }} dy={10} />
+                  <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#cbd5e1' }} dx={-10} />
                   <RechartsTooltip contentStyle={{ borderRadius: '8px', border: '1px solid var(--border)', background: 'var(--bg-card)', color: 'var(--text-primary)', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)' }} />
-                  <Line type="monotone" dataKey="count" stroke="#a855f7" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: 'var(--bg-card)', stroke: '#a855f7' }} activeDot={{ r: 6, fill: '#a855f7' }} />
+                  <Line type="monotone" dataKey="count" stroke="#a855f7" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: '#1e293b', stroke: '#a855f7' }} activeDot={{ r: 6, fill: '#a855f7' }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
 
           {/* Pie Chart */}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: 20 }}>Top Tools Usage</h3>
             <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={stats.topToolsUsage}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
-                    paddingAngle={2}
-                    dataKey="value"
-                  >
-                    {stats.topToolsUsage.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                  <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', background: 'var(--bg-secondary)', color: 'white', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)' }} />
-                </PieChart>
-              </ResponsiveContainer>
+              {stats.topToolsUsage?.length > 0 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={stats.topToolsUsage}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={80}
+                      paddingAngle={2}
+                      dataKey="value"
+                    >
+                      {stats.topToolsUsage.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <RechartsTooltip contentStyle={{ borderRadius: '8px', border: 'none', background: 'var(--bg-secondary)', color: 'white', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.5)' }} />
+                  </PieChart>
+                </ResponsiveContainer>
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: 'var(--text-secondary)', fontSize: '0.9rem' }}>
+                  No tool usage data yet.
+                </div>
+              )}
             </div>
             <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: 12, fontSize: '0.85rem' }}>
-              {stats.topToolsUsage.slice(0, 4).map((tool, i) => (
+              {stats.topToolsUsage?.slice(0, 4).map((tool, i) => (
                 <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: tool.color }} />
@@ -234,7 +246,7 @@ export default function Dashboard() {
           </div>
 
           {/* Recent Activity */}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>Recent Activity</h3>
               <div onClick={() => toast('Loading all activities...', { icon: '🔄' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: 4 }}>View All</div>
@@ -270,7 +282,7 @@ export default function Dashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
           
           {/* Recent Files Table */}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>Recent Files</h3>
               <div onClick={() => toast('Fetching all recent files...', { icon: '📄' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: 4 }}>View All</div>
@@ -318,7 +330,7 @@ export default function Dashboard() {
           </div>
 
           {/* Storage Overview */}
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>Storage Overview</h3>
               <div onClick={() => toast('Loading storage details...', { icon: '💾' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: 4 }}>View Details</div>
@@ -399,7 +411,7 @@ export default function Dashboard() {
         )}
 
         {activeTab === 'Users' && (
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>All Users</h3>
               <div style={{ fontSize: '0.8rem', color: '#a855f7', fontWeight: 500, padding: '6px 12px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: 6, border: '1px solid rgba(168, 85, 247, 0.2)' }}>Total: {stats.usersList?.length || 0}</div>
@@ -433,7 +445,7 @@ export default function Dashboard() {
         )}
 
         {activeTab === 'Files' && (
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>All Processed Files</h3>
               <div style={{ fontSize: '0.8rem', color: '#a855f7', fontWeight: 500, padding: '6px 12px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: 6, border: '1px solid rgba(168, 85, 247, 0.2)' }}>Total: {stats.allFiles?.length || 0}</div>
@@ -472,7 +484,7 @@ export default function Dashboard() {
         )}
 
         {activeTab === 'Transactions' && (
-          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
+          <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: 'var(--text-primary)' }}>System Transactions</h3>
               <div style={{ fontSize: '0.8rem', color: '#a855f7', fontWeight: 500, padding: '6px 12px', background: 'rgba(168, 85, 247, 0.1)', borderRadius: 6, border: '1px solid rgba(168, 85, 247, 0.2)' }}>Real-time Feed</div>
