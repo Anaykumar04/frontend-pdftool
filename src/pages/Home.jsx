@@ -137,9 +137,10 @@ export default function Home() {
       <section className="section-sm">
         <div className="container">
           <div style={{
-            background: 'linear-gradient(135deg, rgba(139,92,246,0.15), rgba(59,130,246,0.1))',
-            border: '1px solid var(--border)', borderRadius: 'var(--radius-xl)',
-            padding: '60px 40px', textAlign: 'center'
+            background: 'var(--bg-card)',
+            border: '1px solid var(--border-light)', borderRadius: 'var(--radius-xl)',
+            padding: '60px 40px', textAlign: 'center',
+            boxShadow: 'var(--shadow-md)'
           }}>
             <h2 style={{ marginBottom: 12 }}>Ready to edit your <span className="gradient-text">PDFs?</span></h2>
             <p style={{ color: 'var(--text-secondary)', marginBottom: 28, maxWidth: 500, margin: '0 auto 28px' }}>

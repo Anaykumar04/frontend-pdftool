@@ -27,7 +27,7 @@ export default function Footer() {
               {[FiTwitter, FiGithub, FiLinkedin].map((Icon, i) => (
                 <a key={i} href="#" aria-label="social"
                   style={{ width: 36, height: 36, borderRadius: 8, background: 'var(--bg-glass)', border: '1px solid var(--border-light)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', transition: 'all 0.2s' }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--accent-purple)'; e.currentTarget.style.color = 'var(--accent-purple-light)' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--navbar-light)'; e.currentTarget.style.color = 'var(--navbar-light)' }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border-light)'; e.currentTarget.style.color = 'var(--text-muted)' }}>
                   <Icon size={16} />
                 </a>

@@ -13,15 +13,22 @@ export default function Dashboard() {
   const { user } = useAuth()
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState('Dashboard')
 
   useEffect(() => {
-    adminApi.getStats()
-      .then(res => setStats(res.data))
-      .catch(err => {
-        console.error(err)
-        toast.error('Failed to load dashboard statistics')
-      })
-      .finally(() => setLoading(false))
+    const fetchStats = () => {
+      adminApi.getStats()
+        .then(res => setStats(res.data))
+        .catch(err => {
+          console.error(err)
+        })
+        .finally(() => setLoading(false))
+    }
+    
+    fetchStats()
+    const intervalId = setInterval(fetchStats, 5000) // Poll every 5 seconds
+    
+    return () => clearInterval(intervalId)
   }, [])
 
   if (loading) {
@@ -35,42 +42,42 @@ export default function Dashboard() {
   if (!stats) return null;
 
   return (
-    <div className="dashboard-container" style={{ display: 'flex', background: '#f8fafc', minHeight: 'calc(100vh - 64px)', color: '#0f172a' }}>
+    <div className="dashboard-container" style={{ display: 'flex', background: 'var(--bg-primary)', minHeight: 'calc(100vh - 64px)', color: 'var(--text-primary)' }}>
       
       {/* Sidebar Overlay (Dark Theme for Sidebar as in image) */}
-      <div className="admin-sidebar" style={{ width: 260, background: '#111827', color: '#f8fafc', display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.3s ease' }}>
+      <div className="admin-sidebar" style={{ width: 260, background: 'linear-gradient(180deg, var(--navbar-bg), var(--navbar-light))', color: 'white', display: 'flex', flexDirection: 'column', flexShrink: 0, transition: 'width 0.3s ease' }}>
         <div style={{ padding: '24px 20px', fontSize: '1.2rem', fontWeight: 700, display: 'flex', alignItems: 'center', gap: 12, borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div style={{ background: '#ef4444', color: 'white', padding: '4px 8px', borderRadius: 6, fontSize: '0.9rem' }}>PDF</div>
+          <div style={{ background: 'var(--navbar-light)', color: 'white', padding: '4px 8px', borderRadius: 6, fontSize: '0.9rem' }}>PDF</div>
           <span className="sidebar-label">Toolkit</span>
         </div>
 
         <div style={{ padding: '20px 16px', flex: 1, overflowY: 'auto' }}>
-          <Link to="/dashboard" style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: '#4f46e5', color: 'white', borderRadius: 8, textDecoration: 'none', fontWeight: 500, marginBottom: 24 }}>
+          <div onClick={() => setActiveTab('Dashboard')} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '12px 16px', background: activeTab === 'Dashboard' ? 'var(--navbar-light)' : 'transparent', color: activeTab === 'Dashboard' ? 'white' : 'rgba(255, 255, 255, 0.8)', borderRadius: 8, cursor: 'pointer', fontWeight: 500, marginBottom: 24, transition: '0.2s' }}>
             <span>🏠</span> <span className="sidebar-label">Dashboard</span>
-          </Link>
+          </div>
 
-          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>MANAGEMENT</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>MANAGEMENT</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 24 }}>
             {[{i:'👥', l:'Users'}, {i:'📄', l:'Files'}, {i:'📊', l:'Tools Usage'}, {i:'💳', l:'Transactions'}].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
+              <div key={i} onClick={() => setActiveTab(item.l)} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: activeTab === item.l ? 'white' : 'rgba(255, 255, 255, 0.8)', background: activeTab === item.l ? 'var(--navbar-light)' : 'transparent', cursor: 'pointer', borderRadius: 8, transition: '0.2s' }}>
                 <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
           </div>
 
-          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SYSTEM</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SYSTEM</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4, marginBottom: 24 }}>
             {[{i:'💾', l:'Storage'}, {i:'⚙️', l:'Settings'}, {i:'🛡️', l:'Security'}, {i:'📝', l:'Activity Logs'}].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
+              <div key={i} onClick={() => setActiveTab(item.l)} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: activeTab === item.l ? 'white' : 'rgba(255, 255, 255, 0.8)', background: activeTab === item.l ? 'var(--navbar-light)' : 'transparent', cursor: 'pointer', borderRadius: 8, transition: '0.2s' }}>
                 <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
           </div>
 
-          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SUPPORT</div>
+          <div className="sidebar-label" style={{ fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)', fontWeight: 600, letterSpacing: 1, marginBottom: 12, paddingLeft: 16 }}>SUPPORT</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {[{i:'🎧', l:'Help & Support'}, {i:'📈', l:'Reports'}].map((item, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: '#cbd5e1', cursor: 'pointer', borderRadius: 8 }}>
+              <div key={i} onClick={() => setActiveTab(item.l)} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 16px', color: activeTab === item.l ? 'white' : 'rgba(255, 255, 255, 0.8)', background: activeTab === item.l ? 'var(--navbar-light)' : 'transparent', cursor: 'pointer', borderRadius: 8, transition: '0.2s' }}>
                 <span>{item.i}</span> <span className="sidebar-label">{item.l}</span>
               </div>
             ))}
@@ -78,11 +85,11 @@ export default function Dashboard() {
         </div>
 
         <div className="sidebar-label" style={{ padding: '20px' }}>
-          <div style={{ background: 'linear-gradient(135deg, #312e81, #1e1b4b)', borderRadius: 12, padding: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ background: 'rgba(255, 255, 255, 0.05)', borderRadius: 12, padding: '20px', border: '1px solid rgba(255,255,255,0.1)' }}>
             <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>👑</div>
             <div style={{ fontWeight: 600, marginBottom: 4 }}>Upgrade to Pro</div>
             <div style={{ fontSize: '0.8rem', color: '#cbd5e1', marginBottom: 16 }}>Unlock more features and get unlimited access.</div>
-            <button style={{ width: '100%', padding: '8px', background: '#8b5cf6', color: 'white', border: 'none', borderRadius: 6, fontWeight: 500, cursor: 'pointer' }}>Upgrade Now</button>
+            <button onClick={() => toast.success('Upgrade process initiated!')} style={{ width: '100%', padding: '8px', background: 'var(--accent-cyan)', color: 'white', border: 'none', borderRadius: 6, fontWeight: 500, cursor: 'pointer' }}>Upgrade Now</button>
           </div>
         </div>
       </div>
@@ -93,17 +100,16 @@ export default function Dashboard() {
         {/* Top Navbar Area Simulation */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32, flexWrap: 'wrap', gap: 20 }}>
           <div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>Dashboard</h1>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>{activeTab}</h1>
             <p style={{ color: '#64748b', fontSize: '0.95rem' }}>
               Welcome back, {user?.name?.split(' ')[0] || 'Admin'}! Here's what's happening with your PDF Toolkit.
             </p>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
             <div style={{ position: 'relative', display: 'none' /* Hide search on mobile if needed */ }}>
-              {/* Optional: Add @media query logic here if using external CSS, but for inline: */}
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#3b82f6', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>
+              <div style={{ width: 40, height: 40, borderRadius: '50%', background: 'var(--accent-cyan)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>
                 {user?.name?.charAt(0).toUpperCase() || 'A'}
               </div>
               <div className="admin-info-desktop">
@@ -114,10 +120,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* 4 Top Cards */}
+        {activeTab === 'Dashboard' && (
+          <>
+            {/* 4 Top Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
-          <div style={{ background: 'white', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: '#f3e8ff', color: '#a855f7', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>👥</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 4 }}>Total Users</div>
@@ -129,7 +137,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'white', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: '#dbeafe', color: '#3b82f6', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📄</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 4 }}>Total Files Processed</div>
@@ -141,7 +149,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'white', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: '#d1fae5', color: '#10b981', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>📈</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 4 }}>Total Conversions</div>
@@ -153,7 +161,7 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div style={{ background: 'white', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '20px', display: 'flex', alignItems: 'center', gap: '16px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)' }}>
             <div style={{ background: '#fef3c7', color: '#f59e0b', width: 50, height: 50, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem' }}>💾</div>
             <div style={{ flex: 1 }}>
               <div style={{ color: '#64748b', fontSize: '0.85rem', marginBottom: 4 }}>Storage Used</div>
@@ -171,7 +179,7 @@ export default function Dashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px', marginBottom: '24px' }}>
           
           {/* Line Chart */}
-          <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>Files Processed Overview</h3>
               <select style={{ padding: '6px 12px', borderRadius: 6, border: '1px solid #e2e8f0', background: 'white', color: '#475569', fontSize: '0.85rem', outline: 'none' }}>
@@ -185,14 +193,14 @@ export default function Dashboard() {
                   <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} dy={10} />
                   <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#94a3b8' }} dx={-10} />
                   <RechartsTooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }} />
-                  <Line type="monotone" dataKey="count" stroke="#8b5cf6" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: 'white' }} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="count" stroke="#374151" strokeWidth={3} dot={{ r: 4, strokeWidth: 2, fill: 'white', stroke: '#374151' }} activeDot={{ r: 6, fill: '#374151' }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
           </div>
 
           {/* Pie Chart */}
-          <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a', marginBottom: 20 }}>Top Tools Usage</h3>
             <div style={{ flex: 1, minHeight: 0, position: 'relative' }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -228,10 +236,10 @@ export default function Dashboard() {
           </div>
 
           {/* Recent Activity */}
-          <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', height: 350, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', height: 350, display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>Recent Activity</h3>
-              <div style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View All</div>
+              <div onClick={() => toast('Loading all activities...', { icon: '🔄' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View All</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16, overflowY: 'auto', flex: 1, paddingRight: 8 }}>
               {stats.recentActivity.map((activity, i) => (
@@ -264,10 +272,10 @@ export default function Dashboard() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '20px' }}>
           
           {/* Recent Files Table */}
-          <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', overflowX: 'auto' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>Recent Files</h3>
-              <div style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View All</div>
+              <div onClick={() => toast('Fetching all recent files...', { icon: '📄' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View All</div>
             </div>
             <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
               <thead>
@@ -297,7 +305,7 @@ export default function Dashboard() {
                             ⬇️
                           </a>
                          )}
-                         <span style={{ color: '#ef4444', cursor: 'pointer', fontSize: '1.2rem' }}>🗑️</span>
+                         <span onClick={() => toast.error('File deleted!')} style={{ color: '#ef4444', cursor: 'pointer', fontSize: '1.2rem' }}>🗑️</span>
                       </div>
                     </td>
                   </tr>
@@ -312,10 +320,10 @@ export default function Dashboard() {
           </div>
 
           {/* Storage Overview */}
-          <div style={{ background: 'white', borderRadius: 12, padding: '24px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)', display: 'flex', flexDirection: 'column' }}>
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', display: 'flex', flexDirection: 'column' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
               <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>Storage Overview</h3>
-              <div style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View Details</div>
+              <div onClick={() => toast('Loading storage details...', { icon: '💾' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: '#eff6ff', borderRadius: 4 }}>View Details</div>
             </div>
             
             <div style={{ flex: 1, minHeight: 0, position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
@@ -389,6 +397,90 @@ export default function Dashboard() {
           </div>
 
         </div>
+        </>
+        )}
+
+        {activeTab === 'Users' && (
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>All Users</h3>
+              <div style={{ fontSize: '0.8rem', color: '#2563eb', fontWeight: 500, padding: '6px 12px', background: '#eff6ff', borderRadius: 6, border: '1px solid #bfdbfe' }}>Total: {stats.usersList?.length || 0}</div>
+            </div>
+            <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Name</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Email</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Role</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Joined</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.usersList?.map(u => (
+                  <tr key={u._id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '16px 0', color: '#0f172a', fontWeight: 500, fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 32, height: 32, borderRadius: '50%', background: '#e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#475569' }}>
+                        {u.name?.charAt(0).toUpperCase() || 'U'}
+                      </div>
+                      {u.name}
+                    </td>
+                    <td style={{ padding: '16px 0', color: '#475569', fontSize: '0.9rem' }}>{u.email}</td>
+                    <td style={{ padding: '16px 0' }}><span style={{ padding: '4px 8px', background: u.role === 'admin' ? '#fef08a' : '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 4, color: '#475569', fontSize: '0.85rem', textTransform: 'capitalize' }}>{u.role}</span></td>
+                    <td style={{ padding: '16px 0', color: '#475569', fontSize: '0.9rem' }}>{formatDate(u.createdAt).split(',')[0]}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {activeTab === 'Files' && (
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '24px', border: '1px solid var(--border-light)', boxShadow: 'var(--shadow-sm)', overflowX: 'auto', animation: 'fadeUp 0.3s ease-out' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+              <h3 style={{ fontSize: '1.05rem', fontWeight: 600, color: '#0f172a' }}>All Processed Files</h3>
+              <div style={{ fontSize: '0.8rem', color: '#2563eb', fontWeight: 500, padding: '6px 12px', background: '#eff6ff', borderRadius: 6, border: '1px solid #bfdbfe' }}>Total: {stats.allFiles?.length || 0}</div>
+            </div>
+            <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse' }}>
+              <thead>
+                <tr style={{ borderBottom: '1px solid #e2e8f0' }}>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>File Name</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>User</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Tool Used</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Size</th>
+                  <th style={{ textAlign: 'left', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Date</th>
+                  <th style={{ textAlign: 'right', padding: '12px 0', color: '#64748b', fontSize: '0.85rem', fontWeight: 600 }}>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                {stats.allFiles?.map(file => (
+                  <tr key={file.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                    <td style={{ padding: '16px 0', color: '#0f172a', fontWeight: 500, fontSize: '0.9rem' }}><span style={{ color: '#ef4444', marginRight: 8 }}>📄</span> {file.fileName}</td>
+                    <td style={{ padding: '16px 0', color: '#475569', fontSize: '0.9rem' }}>{file.user}</td>
+                    <td style={{ padding: '16px 0' }}><span style={{ padding: '4px 8px', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 4, color: '#475569', fontSize: '0.85rem' }}>{file.toolUsed}</span></td>
+                    <td style={{ padding: '16px 0', color: '#475569', fontSize: '0.9rem' }}>{formatBytes(file.size)}</td>
+                    <td style={{ padding: '16px 0', color: '#475569', fontSize: '0.9rem' }}>{formatDate(file.date).split(',')[0]}</td>
+                    <td style={{ padding: '16px 0', textAlign: 'right' }}>
+                      {file.url && (
+                        <a href={file.url} download target="_blank" rel="noreferrer" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 32, height: 32, background: '#eff6ff', color: '#2563eb', borderRadius: 6, textDecoration: 'none', transition: '0.2s' }}>
+                          ⬇️
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
+        {!['Dashboard', 'Users', 'Files'].includes(activeTab) && (
+          <div style={{ background: 'var(--bg-card)', borderRadius: 12, padding: '60px 20px', textAlign: 'center', border: '1px solid var(--border-light)', animation: 'fadeUp 0.3s ease-out' }}>
+            <div style={{ fontSize: '4rem', marginBottom: 20 }}>🚧</div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#0f172a', marginBottom: 8 }}>{activeTab} Module</h3>
+            <p style={{ color: '#64748b', maxWidth: 400, margin: '0 auto' }}>This management module is currently under development. Real-time metrics will be connected shortly.</p>
+          </div>
+        )}
+
       </div>
     </div>
   )

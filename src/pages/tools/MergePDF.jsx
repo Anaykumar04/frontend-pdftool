@@ -78,7 +78,7 @@ export default function MergePDF() {
                             {(provided, snapshot) => (
                               <div ref={provided.innerRef} {...provided.draggableProps}
                                 className="file-item"
-                                style={{ ...provided.draggableProps.style, opacity: snapshot.isDragging ? 0.8 : 1, boxShadow: snapshot.isDragging ? 'var(--shadow-purple)' : 'none' }}>
+                                style={{ ...provided.draggableProps.style, opacity: snapshot.isDragging ? 0.8 : 1, boxShadow: snapshot.isDragging ? 'var(--shadow-accent)' : 'none' }}>
                                 <span {...provided.dragHandleProps} className="drag-handle">⠿</span>
                                 <span style={{ color: 'var(--text-muted)', fontSize: 12, minWidth: 20 }}>{i + 1}</span>
                                 <span className="file-item-icon">📄</span>

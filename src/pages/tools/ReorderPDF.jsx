@@ -92,8 +92,8 @@ export default function ReorderPDF() {
                                 style={{
                                   ...provided.draggableProps.style,
                                   opacity: snapshot.isDragging ? 0.85 : 1,
-                                  boxShadow: snapshot.isDragging ? 'var(--shadow-purple)' : 'none',
-                                  borderColor: snapshot.isDragging ? 'var(--accent-purple)' : undefined
+                                  boxShadow: snapshot.isDragging ? 'var(--shadow-accent)' : 'none',
+                                  borderColor: snapshot.isDragging ? 'var(--accent-cyan)' : undefined
                                 }}>
                                 <span {...provided.dragHandleProps} className="drag-handle">⠿</span>
                                 <div style={{

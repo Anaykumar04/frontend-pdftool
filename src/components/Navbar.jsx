@@ -32,7 +32,7 @@ export default function Navbar() {
         <div className="navbar-inner">
           {/* Logo */}
           <Link to="/" className="navbar-logo">
-            <span className="navbar-logo-icon">📄</span>
+            <span className="navbar-logo-icon" style={{ background: 'var(--navbar-light)', borderRadius: '8px', padding: '4px' }}>📄</span>
             PDFtoolkit
           </Link>
 
@@ -58,15 +58,15 @@ export default function Navbar() {
                 }}>
                   {tools.map(t => (
                     <Link key={t.to} to={t.to} onClick={() => setToolsOpen(false)}
-                      style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 'var(--radius-md)', color: 'var(--text-secondary)', fontSize: 14, transition: 'all 0.2s', textDecoration: 'none' }}
-                      onMouseEnter={e => { e.currentTarget.style.background = 'var(--bg-glass-hover)'; e.currentTarget.style.color = 'white' }}
-                      onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--text-secondary)' }}>
+                      style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', fontSize: 14, transition: 'all 0.2s', textDecoration: 'none' }}
+                      onMouseEnter={e => { e.currentTarget.style.background = 'var(--navbar-bg)'; e.currentTarget.style.color = 'white' }}
+                      onMouseLeave={e => { e.currentTarget.style.background = ''; e.currentTarget.style.color = 'var(--text-primary)' }}>
                       <span>{t.icon}</span>{t.label}
                     </Link>
                   ))}
                   <div style={{ margin: '4px 0', height: 1, background: 'var(--border-light)' }} />
                   <Link to="/tools" onClick={() => setToolsOpen(false)}
-                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 'var(--radius-md)', color: 'var(--accent-purple-light)', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
+                    style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', borderRadius: 'var(--radius-md)', color: 'var(--accent-cyan)', fontSize: 14, fontWeight: 600, textDecoration: 'none' }}>
                     <FiGrid size={14} /> All Tools
                   </Link>
                 </div>
@@ -81,7 +81,7 @@ export default function Navbar() {
                 <Link to={user?.role === 'admin' ? "/dashboard" : "/profile"} className="btn btn-ghost btn-sm">
                   <FiUser size={14} /> {user?.name?.split(' ')[0]}
                 </Link>
-                <button onClick={handleLogout} className="btn btn-outline btn-sm">
+                <button onClick={handleLogout} className="btn btn-sm" style={{ background: 'rgba(255, 255, 255, 0.1)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
                   <FiLogOut size={14} /> Logout
                 </button>
               </div>

@@ -25,7 +25,7 @@ export default function Profile() {
         address: user.address || '',
         avatar: user.avatar || ''
       })
-      
+
       historyApi.get()
         .then(res => setHistory(res.data.history || []))
         .catch(err => console.error(err))
@@ -47,35 +47,35 @@ export default function Profile() {
   if (!user) return null
 
   return (
-    <div className="profile-page" style={{ padding: '40px 20px', maxWidth: 1200, margin: '0 auto', color: '#1e293b' }}>
+    <div className="profile-page" style={{ padding: '40px 20px', maxWidth: 1200, margin: '0 auto', color: 'var(--text-primary)' }}>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 40 }}>
-        
+
         {/* Profile Card */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          <div style={{ background: 'white', borderRadius: 24, padding: 32, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
-            <div 
+          <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
+            <div
               style={{ position: 'relative', width: 120, height: 120, margin: '0 auto 24px', borderRadius: '50%', overflow: 'hidden', border: '4px solid #f8fafc', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)', cursor: 'pointer', background: '#f1f5f9' }}
               onClick={() => document.getElementById('avatarInput').click()}
               title="Click to change photo"
             >
               {user.avatar ? (
-                <img 
-                  src={user.avatar} 
-                  alt="" // Remove name as alt to prevent it showing up if image fails
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                <img
+                  src={user.avatar.startsWith('http') ? user.avatar : `${import.meta.env.VITE_SERVER_URL || 'http://localhost:5000'}${user.avatar.startsWith('/') ? '' : '/'}${user.avatar}`}
+                  alt=""
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.nextSibling.style.display = 'flex';
+                    if (e.target.nextSibling) e.target.nextSibling.style.display = 'flex';
                   }}
                 />
               ) : null}
-              <div style={{ 
-                width: '100%', height: '100%', 
-                background: 'linear-gradient(135deg, #6366f1, #a855f7)', 
-                color: 'white', 
-                display: user.avatar ? 'none' : 'flex', 
-                alignItems: 'center', justifyContent: 'center', 
-                fontSize: '3rem', fontWeight: 700 
+              <div style={{
+                width: '100%', height: '100%',
+                background: 'var(--gradient-hero)',
+                color: 'white',
+                display: user.avatar ? 'none' : 'flex',
+                alignItems: 'center', justifyContent: 'center',
+                fontSize: '3rem', fontWeight: 700
               }}>
                 {user.name.charAt(0).toUpperCase()}
               </div>
@@ -83,11 +83,11 @@ export default function Profile() {
                 Change
               </div>
             </div>
-            <input 
-              id="avatarInput" 
-              type="file" 
-              accept="image/*" 
-              style={{ display: 'none' }} 
+            <input
+              id="avatarInput"
+              type="file"
+              accept="image/*"
+              style={{ display: 'none' }}
               onChange={async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
@@ -105,11 +105,11 @@ export default function Profile() {
                 }
               }}
             />
-            
+
             <div style={{ textAlign: 'center', marginBottom: 32 }}>
               <h2 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: 4 }}>{user.name}</h2>
               <p style={{ color: '#64748b', fontSize: '0.9rem' }}>{user.email}</p>
-              <div style={{ marginTop: 12, display: 'inline-flex', padding: '4px 12px', background: '#f1f5f9', borderRadius: 20, fontSize: '0.75rem', fontWeight: 600, color: '#475569', textTransform: 'uppercase', letterSpacing: 1 }}>
+              <div style={{ marginTop: 12, display: 'inline-flex', padding: '4px 12px', background: 'var(--bg-card)', borderRadius: 20, fontSize: '0.75rem', fontWeight: 600, color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: 1 }}>
                 {user.plan} Account
               </div>
             </div>
@@ -131,70 +131,70 @@ export default function Profile() {
               </div>
             </div>
 
-            <button 
+            <button
               onClick={() => setEditing(!editing)}
-              style={{ width: '100%', marginTop: 32, padding: '12px', borderRadius: 12, border: 'none', background: editing ? '#f1f5f9' : '#1e293b', color: editing ? '#475569' : 'white', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
+              style={{ width: '100%', marginTop: 32, padding: '12px', borderRadius: 12, border: 'none', background: editing ? 'var(--bg-card)' : 'var(--navbar-bg)', color: editing ? 'var(--text-secondary)' : 'white', fontWeight: 600, cursor: 'pointer', transition: 'all 0.2s' }}
             >
               {editing ? 'Cancel Editing' : 'Edit Profile'}
             </button>
           </div>
 
-          <div style={{ background: 'linear-gradient(135deg, #1e1b4b, #312e81)', borderRadius: 24, padding: 32, color: 'white' }}>
+          <div style={{ background: 'var(--gradient-hero)', borderRadius: 24, padding: 32, color: 'white' }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 12 }}>Need more power?</h3>
             <p style={{ fontSize: '0.9rem', opacity: 0.8, marginBottom: 24 }}>Upgrade to Pro to unlock unlimited file size, more tools, and priority processing.</p>
             <Link to="/pricing" style={{ textDecoration: 'none' }}>
-              <button style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'white', color: '#1e1b4b', fontWeight: 700, cursor: 'pointer' }}>Upgrade Now 🚀</button>
+              <button style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'white', color: 'var(--navbar-bg)', fontWeight: 700, cursor: 'pointer' }}>Upgrade Now 🚀</button>
             </Link>
           </div>
         </div>
 
         {/* Content Area */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-          
+
           {editing ? (
-            <div style={{ background: 'white', borderRadius: 24, padding: 40, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9' }}>
+            <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 40, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)' }}>
               <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 24 }}>Update Account Information</h3>
               <form onSubmit={handleUpdate} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
                   <div>
                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: 8, color: '#64748b' }}>Full Name</label>
-                    <input 
-                      type="text" 
-                      value={formData.name} 
-                      onChange={e => setFormData({...formData, name: e.target.value})}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none' }}
+                    <input
+                      type="text"
+                      value={formData.name}
+                      onChange={e => setFormData({ ...formData, name: e.target.value })}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
                     />
                   </div>
                   <div>
                     <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: 8, color: '#64748b' }}>Email Address</label>
-                    <input 
-                      type="email" 
-                      value={formData.email} 
-                      onChange={e => setFormData({...formData, email: e.target.value})}
-                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none' }}
+                    <input
+                      type="email"
+                      value={formData.email}
+                      onChange={e => setFormData({ ...formData, email: e.target.value })}
+                      style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
                     />
                   </div>
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: 8, color: '#64748b' }}>Avatar URL</label>
-                  <input 
-                    type="text" 
+                  <input
+                    type="text"
                     placeholder="https://example.com/photo.jpg"
-                    value={formData.avatar} 
-                    onChange={e => setFormData({...formData, avatar: e.target.value})}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none' }}
+                    value={formData.avatar}
+                    onChange={e => setFormData({ ...formData, avatar: e.target.value })}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', color: '#1e293b', fontWeight: 500 }}
                   />
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 600, marginBottom: 8, color: '#64748b' }}>Full Address</label>
-                  <textarea 
+                  <textarea
                     rows="3"
-                    value={formData.address} 
-                    onChange={e => setFormData({...formData, address: e.target.value})}
-                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', resize: 'none' }}
+                    value={formData.address}
+                    onChange={e => setFormData({ ...formData, address: e.target.value })}
+                    style={{ width: '100%', padding: '12px 16px', borderRadius: 12, border: '1px solid #e2e8f0', outline: 'none', resize: 'none', color: '#1e293b', fontWeight: 500 }}
                   />
                 </div>
-                <button type="submit" style={{ padding: '14px', borderRadius: 12, border: 'none', background: '#6366f1', color: 'white', fontWeight: 700, cursor: 'pointer', marginTop: 10 }}>
+                <button type="submit" style={{ padding: '14px', borderRadius: 12, border: 'none', background: 'var(--accent-cyan)', color: 'white', fontWeight: 700, cursor: 'pointer', marginTop: 10 }}>
                   Save Changes
                 </button>
               </form>
@@ -203,17 +203,17 @@ export default function Profile() {
             <>
               {/* Stats Overview */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 20 }}>
-                <div style={{ background: 'white', borderRadius: 20, padding: 24, border: '1px solid #f1f5f9', textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>📄</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{history.length}</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Files Processed</div>
                 </div>
-                <div style={{ background: 'white', borderRadius: 20, padding: 24, border: '1px solid #f1f5f9', textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>⚡</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{user.plan === 'free' ? 'Basic' : 'Priority'}</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Processing Speed</div>
                 </div>
-                <div style={{ background: 'white', borderRadius: 20, padding: 24, border: '1px solid #f1f5f9', textAlign: 'center' }}>
+                <div style={{ background: 'var(--bg-primary)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🛡️</div>
                   <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>Secure</div>
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Cloud Storage</div>
@@ -221,16 +221,16 @@ export default function Profile() {
               </div>
 
               {/* Recent Activity */}
-              <div style={{ background: 'white', borderRadius: 24, padding: 32, boxShadow: '0 10px 25px -5px rgba(0,0,0,0.05)', border: '1px solid #f1f5f9', flex: 1 }}>
+              <div style={{ background: 'var(--bg-primary)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)', flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Files</h3>
-                  <button style={{ background: 'none', border: 'none', color: '#6366f1', fontWeight: 600, cursor: 'pointer' }}>View All</button>
+                  <button style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontWeight: 600, cursor: 'pointer' }}>View All</button>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {history.length > 0 ? history.slice(0, 5).map((item, i) => (
                     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 16, borderRadius: 16, border: '1px solid #f8fafc', transition: 'all 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.background = '#f8fafc'} onMouseOut={e => e.currentTarget.style.background = 'transparent'}>
-                      <div style={{ width: 44, height: 44, borderRadius: 12, background: '#eff6ff', color: '#3b82f6', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
+                      <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--bg-card)', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
                         📄
                       </div>
                       <div style={{ flex: 1 }}>
@@ -239,7 +239,19 @@ export default function Profile() {
                       </div>
                       <div style={{ display: 'flex', gap: 8 }}>
                         {item.outputFile?.url && (
-                          <a href={item.outputFile.url} download style={{ padding: '8px', borderRadius: 8, background: '#f1f5f9', color: '#475569', textDecoration: 'none' }}>⬇️</a>
+                          <>
+                            <button
+                              onClick={() => {
+                                navigator.clipboard.writeText(item.outputFile.url);
+                                toast.success('Link copied! 📋');
+                              }}
+                              style={{ padding: '8px', borderRadius: 8, background: 'var(--bg-card)', color: 'var(--text-secondary)', border: 'none', cursor: 'pointer' }}
+                              title="Copy URL"
+                            >
+                              🔗
+                            </button>
+                            <a href={item.outputFile.url} download style={{ padding: '8px', borderRadius: 8, background: 'var(--bg-card)', color: 'var(--text-secondary)', textDecoration: 'none' }}>⬇️</a>
+                          </>
                         )}
                         <button style={{ padding: '8px', borderRadius: 8, background: '#fef2f2', border: 'none', color: '#ef4444', cursor: 'pointer' }}>🗑️</button>
                       </div>
