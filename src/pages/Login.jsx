@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import { FcGoogle } from 'react-icons/fc'
 
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
@@ -95,8 +96,8 @@ export default function Login() {
 
         <div className="auth-divider"><span>or</span></div>
 
-        <button type="button" className="btn btn-outline" onClick={handleGoogleAuthStart} style={{ width: '100%', justifyContent: 'center', gap: 12, marginBottom: 12, background: 'white', borderColor: '#e2e8f0', color: '#475569', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google" style={{ width: 18 }} />
+        <button type="button" className="btn btn-outline" onClick={handleGoogleAuthStart} style={{ width: '100%', justifyContent: 'center', gap: 12, marginBottom: 12, background: 'var(--bg-card)', borderColor: 'var(--border)', color: 'var(--text-primary)', boxShadow: 'var(--shadow-sm)' }}>
+          <FcGoogle size={20} />
           Continue with Google
         </button>
 
@@ -114,7 +115,7 @@ export default function Login() {
         <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
           <div style={{ background: 'white', borderRadius: 12, width: 400, maxWidth: '90%', padding: '24px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', animation: 'fadeUp 0.3s ease-out' }}>
             <div style={{ textAlign: 'center', marginBottom: 20 }}>
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google Logo" style={{ width: 40, marginBottom: 12 }} />
+              <FcGoogle size={40} style={{ marginBottom: 12 }} />
               <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#202124' }}>Sign in with Google</h2>
               <p style={{ color: '#5f6368', fontSize: '0.9rem', marginTop: 8 }}>Choose an account to continue to PDFtoolkit</p>
             </div>

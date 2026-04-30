@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import { FcGoogle } from 'react-icons/fc'
 
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
@@ -98,7 +99,7 @@ export default function Register() {
 
         <div className="auth-divider"><span>or</span></div>
         <button type="button" className="btn btn-outline" onClick={handleGoogleAuth} style={{ width: '100%', justifyContent: 'center', gap: 12, marginBottom: 12 }}>
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/action/google.svg" alt="Google" style={{ width: 18 }} />
+          <FcGoogle size={20} />
           Continue with Google
         </button>
         <Link to="/tools" className="btn btn-ghost" style={{ width: '100%', justifyContent: 'center' }}>
