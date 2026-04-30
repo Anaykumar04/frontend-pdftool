@@ -58,12 +58,16 @@ export default function QuickUpload() {
   }
 
   const getForceDownloadUrl = (res) => {
-    const cloudName = 'dpdfeditor'; // Update with actual cloud name
-    const publicId = res.public_id;
-    if (res.resource_type === 'raw') {
-      return `https://res.cloudinary.com/${cloudName}/raw/upload/fl_attachment/${publicId}`;
-    }
-    return res.secure_url;
+    // If the backend returned a clean download link, use it
+    if (res.download_url) return res.download_url;
+    // Otherwise construct it
+    return `${API.defaults.baseURL}/upload/download/${res.public_id}`;
+  }
+
+  // Define clean shareable URL
+  const getShareableUrl = (res) => {
+    if (res.download_url) return res.download_url;
+    return `${API.defaults.baseURL}/upload/download/${res.public_id}`;
   }
 
   return (
@@ -132,8 +136,8 @@ export default function QuickUpload() {
             <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: 12, padding: 20, marginBottom: 24, border: '1px solid var(--border-light)' }}>
               <div style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600, textTransform: 'uppercase' }}>Secure Link</div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <input readOnly value={result.secure_url} style={{ flex: 1, background: 'transparent', border: 'none', padding: 0 }} />
-                <button onClick={() => copyToClipboard(result.secure_url)} className="btn btn-sm btn-ghost" title="Copy link"><FiCopy /></button>
+                <input readOnly value={getShareableUrl(result)} style={{ flex: 1, background: 'transparent', border: 'none', padding: 0 }} />
+                <button onClick={() => copyToClipboard(getShareableUrl(result))} className="btn btn-sm btn-ghost" title="Copy link"><FiCopy /></button>
               </div>
             </div>
 
