@@ -52,8 +52,21 @@ export function AuthProvider({ children }) {
     return res.data.user
   }
 
+  const sendOTP = async (email) => {
+    return await API.post('/auth/send-otp', { email })
+  }
+
+  const verifyOTP = async (email, otp) => {
+    const res = await API.post('/auth/verify-otp', { email, otp })
+    const { token: t, user: u } = res.data
+    localStorage.setItem('pdf_token', t)
+    API.defaults.headers.common['Authorization'] = `Bearer ${t}`
+    setToken(t); setUser(u)
+    return u
+  }
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, updateProfile, isAuth: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, updateProfile, sendOTP, verifyOTP, isAuth: !!user }}>
       {children}
     </AuthContext.Provider>
   )
