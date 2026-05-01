@@ -7,6 +7,7 @@ import { FcGoogle } from 'react-icons/fc'
 export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' })
   const [loading, setLoading] = useState(false)
+  const [showGoogleModal, setShowGoogleModal] = useState(false)
   const [googleStep, setGoogleStep] = useState('list') // 'list', 'email', 'otp'
   const [selectedEmail, setSelectedEmail] = useState('')
   const [otp, setOtp] = useState('')
