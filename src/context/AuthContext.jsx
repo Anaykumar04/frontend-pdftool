@@ -65,8 +65,17 @@ export function AuthProvider({ children }) {
     return u
   }
 
+  const loginWithGoogle = async (idToken) => {
+    const res = await API.post('/auth/google', { token: idToken })
+    const { token: t, user: u } = res.data
+    localStorage.setItem('pdf_token', t)
+    API.defaults.headers.common['Authorization'] = `Bearer ${t}`
+    setToken(t); setUser(u)
+    return u
+  }
+
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, register, logout, updateProfile, sendOTP, verifyOTP, isAuth: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, updateProfile, sendOTP, verifyOTP, loginWithGoogle, isAuth: !!user }}>
       {children}
     </AuthContext.Provider>
   )
