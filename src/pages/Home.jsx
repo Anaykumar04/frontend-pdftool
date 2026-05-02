@@ -40,20 +40,37 @@ export default function Home() {
   const [errorInfo, setErrorInfo] = useState('')
 
   useEffect(() => {
-    api.get('/health')
-      .then(res => setApiStatus('ok'))
-      .catch(err => {
-        setApiStatus('error');
-        setErrorInfo(err.message || 'Network Error');
-      })
+    // Retry up to 3 times to handle Render free-tier cold start (~30s spin-up)
+    let attempts = 0
+    const maxAttempts = 3
+
+    const checkHealth = () => {
+      attempts++
+      api.get('/health')
+        .then(() => setApiStatus('ok'))
+        .catch(err => {
+          if (attempts < maxAttempts) {
+            setTimeout(checkHealth, 10000) // retry after 10s
+          } else {
+            setApiStatus('error')
+            setErrorInfo(err.message || 'Network Error')
+          }
+        })
+    }
+
+    checkHealth()
   }, [])
 
   return (
     <>
+      {apiStatus === 'checking' && (
+        <div style={{ background: '#fef3c7', color: '#92400e', padding: '12px 20px', textAlign: 'center', borderBottom: '1px solid #fcd34d', zIndex: 1000, position: 'relative' }}>
+          ⏳ <strong>Connecting to server…</strong> This may take up to 30 seconds on first load.
+        </div>
+      )}
       {apiStatus === 'error' && (
         <div style={{ background: '#fee2e2', color: '#991b1b', padding: '16px 20px', textAlign: 'center', borderBottom: '1px solid #f87171', zIndex: 1000, position: 'relative' }}>
-          <strong>⚠️ Backend Connection Failed:</strong> {errorInfo}. 
-          If you are on Vercel, please ensure you deployed the <strong>Root Directory</strong> and not just the frontend folder.
+          <strong>⚠️ Server Unavailable:</strong> Could not reach the backend ({errorInfo}). Please refresh the page or try again in a moment.
         </div>
       )}
       {/* HERO */}
