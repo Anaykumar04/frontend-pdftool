@@ -7,15 +7,15 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        target: 'https://pdfeditor-1-xolb.onrender.com',
         changeOrigin: true,
       },
       '/outputs': {
-        target: 'http://localhost:5000',
+        target: 'https://pdfeditor-1-xolb.onrender.com',
         changeOrigin: true,
       },
       '/download': {
-        target: 'http://localhost:5000',
+        target: 'https://pdfeditor-1-xolb.onrender.com',
         changeOrigin: true,
       }
     }
