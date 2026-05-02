@@ -113,8 +113,12 @@ export default function Dashboard() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
             <Link to="/profile" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none', cursor: 'pointer', background: 'var(--bg-card)', padding: '6px 16px 6px 6px', borderRadius: 30, border: '1px solid var(--border)', transition: 'all 0.2s' }} className="admin-profile-btn">
-              <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--gradient-btn)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem' }}>
-                {user?.name?.charAt(0).toUpperCase() || 'A'}
+              <div style={{ width: 36, height: 36, borderRadius: '50%', background: 'var(--gradient-btn)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '1.2rem', overflow: 'hidden' }}>
+                {user?.avatar ? (
+                  <img src={user.avatar} alt={user.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                ) : (
+                  user?.name?.charAt(0).toUpperCase() || 'A'
+                )}
               </div>
               <div className="admin-info-desktop">
                 <div style={{ fontWeight: 600, fontSize: '0.9rem', color: 'var(--text-primary)' }}>{user?.name || 'Admin User'}</div>
@@ -134,7 +138,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Users</div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalUsers.toLocaleString()}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalUsers?.toLocaleString() || 0}</div>
                     <div style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: 600 }}>↑ 12.5%</div>
                   </div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 4 }}>vs last month</div>
@@ -146,7 +150,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Files Processed</div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalFilesProcessed.toLocaleString()}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalFilesProcessed?.toLocaleString() || 0}</div>
                     <div style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: 600 }}>↑ 18.6%</div>
                   </div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 4 }}>vs last month</div>
@@ -158,7 +162,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Total Conversions</div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalConversions.toLocaleString()}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{stats.totalConversions?.toLocaleString() || 0}</div>
                     <div style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: 600 }}>↑ 15.3%</div>
                   </div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 4 }}>vs last month</div>
@@ -170,7 +174,7 @@ export default function Dashboard() {
                 <div style={{ flex: 1 }}>
                   <div style={{ color: 'var(--text-secondary)', fontSize: '0.85rem', marginBottom: 4 }}>Storage Used</div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{formatBytes(stats.storageUsed)}</div>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--text-primary)' }}>{formatBytes(stats.storageUsed || 0)}</div>
                     <div style={{ color: '#10b981', fontSize: '0.8rem', fontWeight: 600 }}>↑ 10.8%</div>
                   </div>
                   <div style={{ color: 'var(--text-muted)', fontSize: '0.75rem', marginTop: 4 }}>vs last month</div>
@@ -252,7 +256,7 @@ export default function Dashboard() {
                   <div onClick={() => toast('Loading all activities...', { icon: '🔄' })} style={{ fontSize: '0.8rem', color: '#3b82f6', cursor: 'pointer', fontWeight: 500, padding: '4px 8px', background: 'rgba(59, 130, 246, 0.1)', borderRadius: 4 }}>View All</div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 16, overflowY: 'auto', flex: 1, paddingRight: 8 }}>
-                  {stats.recentActivity.map((activity, i) => (
+                  {stats.recentActivity?.map((activity, i) => (
                     <div key={i} style={{ display: 'flex', gap: 12 }}>
                       <div style={{ width: 36, height: 36, borderRadius: '8px', background: 'var(--bg-secondary)', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1.2rem' }}>
                         📄
@@ -299,7 +303,7 @@ export default function Dashboard() {
                     </tr>
                   </thead>
                   <tbody>
-                    {stats.recentFiles.map(file => (
+                    {stats.recentFiles?.map(file => (
                       <tr key={file.id} style={{ borderBottom: '1px solid var(--border-light)' }}>
                         <td style={{ padding: '16px 0', display: 'flex', alignItems: 'center', gap: 12, color: 'var(--text-primary)', fontWeight: 500, fontSize: '0.9rem' }}>
                           <span style={{ color: '#ef4444' }}>📄</span> {file.fileName}

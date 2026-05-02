@@ -71,7 +71,6 @@ export default function App() {
           <Route path="/tools/edit" element={<PDFEditor />} />
           <Route path="/tools/fillable-pdf" element={<FillablePDF />} />
           <Route path="/tools/background-color" element={<BackgroundColor />} />
-          <Route path="/tools/csv-to-pdf" element={<ComingSoonTool name="CSV to PDF" category="Convert to PDF" />} />
           <Route path="/tools/pdf-to-jpg" element={<ComingSoonTool name="PDF to JPG" category="Convert from PDF" />} />
           <Route path="/tools/pdf-to-word" element={<ComingSoonTool name="PDF to Word" category="Convert from PDF" />} />
           <Route path="/tools/ocr" element={<ComingSoonTool name="OCR PDF" category="Convert from PDF" />} />

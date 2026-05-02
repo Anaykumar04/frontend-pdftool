@@ -107,22 +107,27 @@ export default function Register() {
         </form>
 
         <div className="auth-divider"><span>or</span></div>
+        
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
           <GoogleLogin
-            onSuccess={async (res) => {
+            onSuccess={async (credentialResponse) => {
+              setLoading(true);
               try {
-                setLoading(true)
-                const u = await loginWithGoogle(res.credential)
-                toast.success(`Welcome, ${u.name}! 🎉`)
-                navigate(u.role === 'admin' ? '/dashboard' : '/profile')
+                const u = await loginWithGoogle(credentialResponse.credential);
+                toast.success(`Welcome to PDFtoolkit, ${u.name}! 🎉`);
+                navigate(u.role === 'admin' ? '/dashboard' : '/profile');
               } catch (err) {
-                toast.error('Google registration failed')
-              } finally { setLoading(false) }
+                toast.error(err.message || 'Google Login failed');
+              } finally {
+                setLoading(false);
+              }
             }}
-            onError={() => toast.error('Google registration failed')}
-            theme="filled_black"
+            onError={() => {
+              toast.error('Google Login Failed');
+            }}
+            useOneTap
+            theme="filled_blue"
             shape="pill"
-            width="100%"
           />
         </div>
 

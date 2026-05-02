@@ -78,8 +78,13 @@ export default function Navbar() {
           <div className="navbar-actions">
             {isAuth ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <Link to={user?.role === 'admin' ? "/dashboard" : "/profile"} className="btn btn-ghost btn-sm">
-                  <FiUser size={14} /> {user?.name?.split(' ')[0]}
+                <Link to={user?.role === 'admin' ? "/dashboard" : "/profile"} className="btn btn-ghost btn-sm" style={{ padding: '4px 12px 4px 4px' }}>
+                  {user?.avatar ? (
+                    <img src={user.avatar} alt={user.name} style={{ width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }} />
+                  ) : (
+                    <FiUser size={14} />
+                  )}
+                  <span style={{ marginLeft: 4 }}>{user?.name?.split(' ')[0]}</span>
                 </Link>
                 <button onClick={handleLogout} className="btn btn-sm" style={{ background: 'rgba(255, 255, 255, 0.1)', color: 'white', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
                   <FiLogOut size={14} /> Logout

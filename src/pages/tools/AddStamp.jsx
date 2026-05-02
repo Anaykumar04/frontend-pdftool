@@ -67,7 +67,7 @@ export default function AddStamp() {
                 <div className="card-glass" style={{ marginTop: 20, padding: 30, textAlign: 'center' }}>
                    <p style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 20 }}>Live Stamp Preview</p>
                    <div style={{ 
-                     display: 'inline-block',
+                     display: 'inline-flex',
                      padding: variant === 'circular' ? '40px' : '15px 30px',
                      border: `4px solid ${color}`,
                      borderRadius: variant === 'circular' ? '50%' : '8px',
@@ -82,7 +82,6 @@ export default function AddStamp() {
                      pointerEvents: 'none',
                      minWidth: variant === 'circular' ? 180 : 'auto',
                      minHeight: variant === 'circular' ? 180 : 'auto',
-                     display: 'inline-flex',
                      alignItems: 'center',
                      justifyContent: 'center'
                    }}>
