@@ -188,7 +188,12 @@ export const historyApi = {
 }
 
 export const adminApi = {
-  getStats: () => api.get('/admin/stats')
+  getStats: () => api.get('/admin/stats'),
+  getUsers: () => api.get('/admin/users'),
+  updateUser: (id, data) => api.put(`/admin/users/${id}`, data),
+  deleteUser: (id) => api.delete(`/admin/users/${id}`),
+  deleteHistory: (id) => api.delete(`/admin/history/${id}`),
 }
 
 export default api
+

@@ -44,6 +44,16 @@ export default function Profile() {
     }
   }
 
+  const handleDeleteHistory = async (id) => {
+    try {
+      await historyApi.delete(id)
+      setHistory(prev => prev.filter(h => h._id !== id))
+      toast.success('File removed from history')
+    } catch (err) {
+      toast.error('Failed to delete')
+    }
+  }
+
   if (!user) return null
 
   return (
@@ -235,31 +245,27 @@ export default function Profile() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {history.length > 0 ? history.slice(0, 5).map((item, i) => (
-                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 16, padding: 16, borderRadius: 16, border: '1px solid #f8fafc', transition: 'all 0.2s', cursor: 'default' }} onMouseOver={e => e.currentTarget.style.background = '#f8fafc'} onMouseOut={e => e.currentTarget.style.background = 'transparent'}>
-                      <div style={{ width: 44, height: 44, borderRadius: 12, background: 'var(--bg-card)', color: 'var(--accent-blue)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem' }}>
+                  <div key={i} style={{ display:'flex', alignItems:'center', gap:16, padding:16, borderRadius:16, border:'1px solid rgba(255,255,255,0.05)', transition:'all 0.2s', background:'rgba(30,41,59,0.3)' }}>
+                      <div style={{ width:44, height:44, borderRadius:12, background:'rgba(139,92,246,0.1)', color:'#a78bfa', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', flexShrink:0 }}>
                         📄
                       </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 600, fontSize: '0.95rem' }}>{item.outputFile?.name || 'Processed File'}</div>
-                        <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{formatDate(item.createdAt)} • {formatBytes(item.outputFile?.size || 0)}</div>
+                      <div style={{ flex:1, minWidth:0 }}>
+                        <div style={{ fontWeight:600, fontSize:'0.9rem', overflow:'hidden', textOverflow:'ellipsis', whiteSpace:'nowrap' }}>{item.outputFile?.name || item.outputFile?.filename || 'Processed File'}</div>
+                        <div style={{ fontSize:'0.78rem', color:'#64748b', marginTop:2 }}>
+                          {formatDate(item.createdAt)} · {formatBytes(item.outputFile?.size || 0)}
+                          {item.operation && <span style={{ marginLeft:8, padding:'2px 8px', borderRadius:10, background:'rgba(59,130,246,0.1)', color:'#93c5fd', fontSize:'0.72rem' }}>{item.operation.split('-').map(w=>w.charAt(0).toUpperCase()+w.slice(1)).join(' ')}</span>}
+                        </div>
                       </div>
-                      <div style={{ display: 'flex', gap: 8 }}>
+                      <div style={{ display:'flex', gap:8, flexShrink:0 }}>
                         {item.outputFile?.url && (
-                          <>
-                            <button
-                              onClick={() => {
-                                navigator.clipboard.writeText(item.outputFile.url);
-                                toast.success('Link copied! 📋');
-                              }}
-                              style={{ padding: '8px', borderRadius: 8, background: 'var(--bg-card)', color: 'var(--text-secondary)', border: 'none', cursor: 'pointer' }}
-                              title="Copy URL"
-                            >
-                              🔗
-                            </button>
-                            <a href={item.outputFile.url} download style={{ padding: '8px', borderRadius: 8, background: 'var(--bg-card)', color: 'var(--text-secondary)', textDecoration: 'none' }}>⬇️</a>
-                          </>
+                          <a href={item.outputFile.url.startsWith('http://') ? item.outputFile.url.replace('http://','https://') : item.outputFile.url}
+                            download target="_blank" rel="noreferrer"
+                            style={{ padding:'7px 10px', borderRadius:8, background:'rgba(59,130,246,0.1)', color:'#93c5fd', textDecoration:'none', fontSize:'0.9rem' }}
+                            title="Download">⬇️</a>
                         )}
-                        <button style={{ padding: '8px', borderRadius: 8, background: '#fef2f2', border: 'none', color: '#ef4444', cursor: 'pointer' }}>🗑️</button>
+                        <button onClick={() => handleDeleteHistory(item._id)}
+                          style={{ padding:'7px 10px', borderRadius:8, background:'rgba(239,68,68,0.1)', border:'none', color:'#fca5a5', cursor:'pointer', fontSize:'0.9rem' }}
+                          title="Delete from history">🗑️</button>
                       </div>
                     </div>
                   )) : (
@@ -278,3 +284,4 @@ export default function Profile() {
     </div>
   )
 }
+

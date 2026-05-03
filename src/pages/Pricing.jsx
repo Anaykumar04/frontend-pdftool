@@ -1,135 +1,89 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { FiCheck, FiZap, FiAward, FiShield } from 'react-icons/fi'
-import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
+import { FiCheck, FiZap } from 'react-icons/fi'
+
+const features = [
+  'Merge, Split, Compress PDFs',
+  'Rotate & Reorder Pages',
+  'Add Watermark & Stamp',
+  'Protect PDF with Password',
+  'Image to PDF & Word to PDF',
+  'Extract Text from PDF',
+  'Sign & Fill PDF Forms',
+  'PDF Info & Metadata',
+  'No file size limits',
+  'No registration required',
+  'Files auto-deleted after 1 hour',
+  'SSL encrypted transfers',
+]
 
 export default function Pricing() {
-  const [loading, setLoading] = useState(null)
-  const navigate = useNavigate()
-
-  const plans = [
-    {
-      id: 'monthly',
-      name: 'Monthly Plan',
-      price: '$9.99',
-      period: '/ month',
-      features: ['Unlimited File Size', 'All PDF Tools', 'Cloud Storage (50GB)', 'Priority Support', 'No Ads'],
-      icon: <FiZap />,
-      color: '#6366f1'
-    },
-    {
-      id: 'quarterly',
-      name: 'Quarterly Plan',
-      price: '$24.99',
-      period: '/ 3 months',
-      features: ['Everything in Monthly', 'Cloud Storage (200GB)', 'Advanced OCR', 'Batch Processing', 'Team Collaboration'],
-      icon: <FiAward />,
-      color: '#a855f7',
-      popular: true
-    },
-    {
-      id: 'annual',
-      name: 'Annual Plan',
-      price: '$79.99',
-      period: '/ year',
-      features: ['Everything in Quarterly', 'Cloud Storage (1TB)', 'Custom Branding', 'API Access', '24/7 Dedicated Manager'],
-      icon: <FiShield />,
-      color: '#ec4899'
-    }
-  ]
-
-  const handleSubscribe = (planId) => {
-    setLoading(planId)
-    // Simulate payment method opening
-    toast.loading(`Opening secure payment for ${planId} plan...`)
-    
-    setTimeout(() => {
-      toast.dismiss()
-      const confirmPayment = window.confirm(`Simulate payment for ${planId} plan?`)
-      if (confirmPayment) {
-        toast.success('Payment successful! Your account has been upgraded. 🎉')
-        // In a real app, you'd call an API here
-        navigate('/profile')
-      }
-      setLoading(null)
-    }, 2000)
-  }
-
   return (
-    <div className="container" style={{ padding: '80px 24px' }}>
-      <div style={{ textAlign: 'center', marginBottom: 64 }}>
-        <h1 style={{ fontSize: '3rem', fontWeight: 800, marginBottom: 16 }}>Simple, Transparent Pricing</h1>
-        <p style={{ color: 'var(--text-secondary)', fontSize: '1.2rem', maxWidth: 600, margin: '0 auto' }}>
-          Choose the plan that's right for you and unlock the full power of PDFtoolkit.
+    <div className="container" style={{ padding:'80px 24px', maxWidth:900, margin:'0 auto' }}>
+      <div style={{ textAlign:'center', marginBottom:64 }}>
+        <span style={{ display:'inline-block', padding:'6px 16px', borderRadius:20, background:'rgba(139,92,246,0.1)', color:'#a78bfa', fontSize:'0.85rem', fontWeight:600, marginBottom:16 }}>
+          🎉 100% Free Forever
+        </span>
+        <h1 style={{ fontSize:'clamp(2rem,5vw,3rem)', fontWeight:800, marginBottom:16 }}>
+          All Tools. <span className="gradient-text">Zero Cost.</span>
+        </h1>
+        <p style={{ color:'var(--text-secondary)', fontSize:'1.1rem', maxWidth:560, margin:'0 auto' }}>
+          Every PDF tool on PDFtoolkit is completely free to use. No hidden fees, no subscriptions, no credit card required.
         </p>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 32 }}>
-        {plans.map((plan) => (
-          <div 
-            key={plan.id} 
-            className="card animate-fade-up" 
-            style={{ 
-              padding: 40, 
-              display: 'flex', 
-              flexDirection: 'column', 
-              position: 'relative',
-              border: plan.popular ? `2px solid ${plan.color}` : '1px solid var(--border-light)',
-              transform: plan.popular ? 'scale(1.05)' : 'none',
-              zIndex: plan.popular ? 1 : 0
-            }}
-          >
-            {plan.popular && (
-              <div style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', background: plan.color, color: 'white', padding: '4px 12px', borderRadius: 20, fontSize: '0.75rem', fontWeight: 700, letterSpacing: 1 }}>
-                MOST POPULAR
-              </div>
-            )}
-            
-            <div style={{ fontSize: '2.5rem', color: plan.color, marginBottom: 20 }}>{plan.icon}</div>
-            <h2 style={{ fontSize: '1.5rem', marginBottom: 8 }}>{plan.name}</h2>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 32 }}>
-              <span style={{ fontSize: '2.5rem', fontWeight: 800 }}>{plan.price}</span>
-              <span style={{ color: 'var(--text-muted)' }}>{plan.period}</span>
-            </div>
-
-            <div style={{ flex: 1, marginBottom: 40 }}>
-              <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
-                {plan.features.map((feature, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 12, fontSize: '0.95rem', color: 'var(--text-secondary)' }}>
-                    <FiCheck style={{ color: plan.color, flexShrink: 0 }} /> {feature}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <button 
-              onClick={() => handleSubscribe(plan.id)}
-              disabled={loading}
-              style={{ 
-                width: '100%', 
-                padding: '16px', 
-                borderRadius: 12, 
-                border: 'none', 
-                background: plan.popular ? plan.color : 'var(--bg-glass-hover)', 
-                color: 'white', 
-                fontWeight: 700, 
-                cursor: 'pointer',
-                transition: 'all 0.2s'
-              }}
-              onMouseOver={e => e.currentTarget.style.transform = 'translateY(-2px)'}
-              onMouseOut={e => e.currentTarget.style.transform = 'none'}
-            >
-              {loading === plan.id ? 'Processing...' : 'Get Started Now'}
-            </button>
+      {/* Single Free Plan Card */}
+      <div style={{ maxWidth:560, margin:'0 auto 64px', background:'rgba(30,41,59,0.5)', backdropFilter:'blur(16px)', borderRadius:24, padding:48, border:'2px solid rgba(139,92,246,0.3)', boxShadow:'0 0 40px rgba(139,92,246,0.1)' }}>
+        <div style={{ display:'flex', alignItems:'center', gap:16, marginBottom:24 }}>
+          <div style={{ width:56, height:56, borderRadius:16, background:'rgba(139,92,246,0.15)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.8rem' }}>
+            <FiZap style={{ color:'#a78bfa' }} />
           </div>
-        ))}
+          <div>
+            <h2 style={{ fontSize:'1.5rem', fontWeight:700, marginBottom:4 }}>Free Plan</h2>
+            <p style={{ color:'var(--text-secondary)', fontSize:'0.9rem' }}>Everything included, always</p>
+          </div>
+        </div>
+
+        <div style={{ display:'flex', alignItems:'baseline', gap:8, marginBottom:32 }}>
+          <span style={{ fontSize:'3.5rem', fontWeight:800, color:'var(--text-primary)' }}>$0</span>
+          <span style={{ color:'var(--text-secondary)', fontSize:'1rem' }}>/ forever</span>
+        </div>
+
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:12, marginBottom:40 }}>
+          {features.map((f, i) => (
+            <div key={i} style={{ display:'flex', alignItems:'center', gap:10, fontSize:'0.9rem', color:'var(--text-secondary)' }}>
+              <FiCheck style={{ color:'#10b981', flexShrink:0 }} />
+              {f}
+            </div>
+          ))}
+        </div>
+
+        <Link to="/tools" style={{ textDecoration:'none' }}>
+          <button style={{ width:'100%', padding:'16px', borderRadius:12, border:'none', background:'linear-gradient(135deg,#8b5cf6,#6366f1)', color:'white', fontWeight:700, fontSize:'1rem', cursor:'pointer', transition:'all 0.2s' }}
+            onMouseOver={e => e.currentTarget.style.transform='translateY(-2px)'}
+            onMouseOut={e => e.currentTarget.style.transform='none'}>
+            🚀 Start Using Free Tools
+          </button>
+        </Link>
       </div>
 
-      <div style={{ marginTop: 80, textAlign: 'center', color: 'var(--text-muted)' }}>
-        <p style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
-          <FiShield /> Secure payments via Stripe & PayPal. Cancel anytime.
-        </p>
+      {/* FAQ */}
+      <div style={{ textAlign:'center' }}>
+        <h2 style={{ fontSize:'1.5rem', fontWeight:700, marginBottom:32 }}>Frequently Asked Questions</h2>
+        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(280px,1fr))', gap:20, textAlign:'left' }}>
+          {[
+            { q:'Is it really free?', a:'Yes, 100%. All PDF tools are free with no hidden charges or limits.' },
+            { q:'Do I need an account?', a:'No account needed for any tool. Create one to save your processing history.' },
+            { q:'Are my files safe?', a:'All files are processed securely and automatically deleted after 1 hour.' },
+            { q:'What file size is supported?', a:'Up to 50MB per file. For merge operations, up to 20 files at once.' },
+          ].map(({ q, a }, i) => (
+            <div key={i} style={{ background:'rgba(30,41,59,0.4)', borderRadius:16, padding:24, border:'1px solid rgba(255,255,255,0.06)' }}>
+              <h3 style={{ fontSize:'0.95rem', fontWeight:700, marginBottom:10 }}>{q}</h3>
+              <p style={{ color:'var(--text-secondary)', fontSize:'0.88rem', lineHeight:1.6 }}>{a}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )
 }
+
