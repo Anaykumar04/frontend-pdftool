@@ -216,14 +216,14 @@ export default function Profile() {
                   <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Files Processed</div>
                 </div>
                 <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>⚡</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{user.plan === 'free' ? 'Basic' : 'Priority'}</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Processing Speed</div>
+                  <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🔧</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>{[...new Set(history.map(h => h.operation).filter(Boolean))].length}</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Tools Used</div>
                 </div>
                 <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 20, padding: 24, border: '1px solid var(--border-light)', textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🛡️</div>
-                  <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>Secure</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Cloud Storage</div>
+                  <div style={{ fontSize: '1.5rem', marginBottom: 8 }}>🆓</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 700 }}>Free</div>
+                  <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Account Type</div>
                 </div>
               </div>
 
@@ -231,11 +231,11 @@ export default function Profile() {
               <div style={{ background: 'rgba(30, 41, 59, 0.5)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: 24, padding: 32, boxShadow: 'var(--shadow-md)', border: '1px solid var(--border-light)', flex: 1 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
                   <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Recent Files</h3>
-                  <button style={{ background: 'none', border: 'none', color: 'var(--accent-cyan)', fontWeight: 600, cursor: 'pointer' }}>View All</button>
+                  <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{history.length} total</span>
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                  {history.length > 0 ? history.slice(0, 5).map((item, i) => (
+                  {history.length > 0 ? history.map((item, i) => (
                   <div key={i} style={{ display:'flex', alignItems:'center', gap:16, padding:16, borderRadius:16, border:'1px solid rgba(255,255,255,0.05)', transition:'all 0.2s', background:'rgba(30,41,59,0.3)' }}>
                       <div style={{ width:44, height:44, borderRadius:12, background:'rgba(139,92,246,0.1)', color:'#a78bfa', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.2rem', flexShrink:0 }}>
                         📄

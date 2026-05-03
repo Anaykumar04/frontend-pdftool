@@ -3,18 +3,24 @@ import { useState, useEffect } from 'react'
 import api from '../services/api'
 
 const tools = [
-  { to: '/tools/merge',    icon: '🔗', label: 'Merge PDF',      desc: 'Combine multiple PDFs into one',       color: 'bg-purple' },
-  { to: '/tools/split',    icon: '✂️', label: 'Split PDF',      desc: 'Extract pages from your PDF',          color: 'bg-blue' },
-  { to: '/tools/compress', icon: '📦', label: 'Compress PDF',   desc: 'Reduce PDF file size',                 color: 'bg-green' },
-  { to: '/tools/rotate',   icon: '🔄', label: 'Rotate PDF',     desc: 'Rotate pages to any angle',            color: 'bg-cyan' },
-  { to: '/tools/watermark',icon: '💧', label: 'Watermark PDF',  desc: 'Add custom text watermark',            color: 'bg-orange' },
-  { to: '/tools/protect',  icon: '🔒', label: 'Protect PDF',    desc: 'Secure your PDF documents',            color: 'bg-red' },
-  { to: '/tools/reorder',  icon: '📋', label: 'Reorder Pages',  desc: 'Drag & drop to rearrange pages',       color: 'bg-indigo' },
-  { to: '/tools/info',     icon: '📊', label: 'PDF Info',       desc: 'View metadata and page details',       color: 'bg-pink' },
-  { to: '/tools/jpg-to-pdf',icon: '🖼️', label: 'JPG to PDF',       desc: 'Convert images to PDF documents',       color: 'bg-teal' },
-  { to: '/tools/extract-text',icon: '📝', label: 'Extract Text',    desc: 'Get searchable text from PDF',         color: 'bg-purple' },
-  { to: '/tools/word-to-pdf', icon: '📄', label: 'Word to PDF',      desc: 'Convert Word to PDF document',         color: 'bg-indigo' },
-  { to: '/tools/fillable-pdf',icon: '🔍', label: 'PDF Form Scanner',     desc: 'AI-scan and fill PDF forms in real-time', color: 'bg-indigo' },
+  { to: '/tools/merge',        icon: '🔗', label: 'Merge PDF',       desc: 'Combine multiple PDFs into one',          color: 'bg-purple' },
+  { to: '/tools/split',        icon: '✂️', label: 'Split PDF',       desc: 'Extract pages from your PDF',             color: 'bg-blue' },
+  { to: '/tools/compress',     icon: '📦', label: 'Compress PDF',    desc: 'Reduce PDF file size',                    color: 'bg-green' },
+  { to: '/tools/rotate',       icon: '🔄', label: 'Rotate PDF',      desc: 'Rotate pages to any angle',               color: 'bg-cyan' },
+  { to: '/tools/watermark',    icon: '💧', label: 'Watermark PDF',   desc: 'Add custom text watermark',               color: 'bg-orange' },
+  { to: '/tools/protect',      icon: '🔒', label: 'Protect PDF',     desc: 'Secure your PDF documents',               color: 'bg-red' },
+  { to: '/tools/reorder',      icon: '📋', label: 'Reorder Pages',   desc: 'Drag & drop to rearrange pages',          color: 'bg-indigo' },
+  { to: '/tools/delete-page',  icon: '🗑️', label: 'Delete Pages',    desc: 'Remove unwanted pages from PDF',          color: 'bg-red' },
+  { to: '/tools/page-number',  icon: '🔢', label: 'Page Numbers',    desc: 'Add page numbers to your PDF',            color: 'bg-cyan' },
+  { to: '/tools/jpg-to-pdf',   icon: '🖼️', label: 'JPG to PDF',      desc: 'Convert images to PDF documents',         color: 'bg-teal' },
+  { to: '/tools/word-to-pdf',  icon: '📄', label: 'Word to PDF',     desc: 'Convert Word to PDF document',            color: 'bg-indigo' },
+  { to: '/tools/extract-text', icon: '📝', label: 'Extract Text',    desc: 'Get searchable text from PDF',            color: 'bg-purple' },
+  { to: '/tools/sign',         icon: '✍️', label: 'E-Sign PDF',      desc: 'Sign with typed or drawn signature',      color: 'bg-teal' },
+  { to: '/tools/add-stamp',    icon: '💮', label: 'Add Stamp',       desc: 'Apply official rubber stamps',            color: 'bg-purple' },
+  { to: '/tools/fillable-pdf', icon: '🔍', label: 'PDF Form Filler', desc: 'AI-scan and fill PDF forms',              color: 'bg-indigo' },
+  { to: '/tools/translate-pdf',icon: '🌍', label: 'Translate PDF',   desc: 'Translate PDF to any language',           color: 'bg-blue' },
+  { to: '/tools/info',         icon: '📊', label: 'PDF Info',        desc: 'View metadata and page details',          color: 'bg-pink' },
+  { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change PDF background color',       color: 'bg-pink' },
 ]
 
 const features = [
@@ -97,7 +103,7 @@ export default function Home() {
             <Link to="/tools" className="btn btn-outline btn-lg">🔧 View All Tools</Link>
           </div>
           <div className="hero-stats animate-fade-up delay-400">
-            {[['50M+', 'PDFs Processed'], ['99.9%', 'Uptime'], ['180+', 'Countries']].map(([n, l]) => (
+            {[['18+', 'PDF Tools'], ['100%', 'Free Forever'], ['🔒', 'Privacy First']].map(([n, l]) => (
               <div key={l} style={{ textAlign: 'center' }}>
                 <div className="hero-stat-number gradient-text">{n}</div>
                 <div className="hero-stat-label">{l}</div>
