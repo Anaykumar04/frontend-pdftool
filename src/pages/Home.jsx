@@ -31,7 +31,7 @@ const faqs = [
   { q: 'What is the maximum file size?', a: 'You can upload PDF files up to 50MB in size. For merge operations, you can upload up to 20 files at once.' },
   { q: 'Do I need to create an account?', a: 'No account is required to use any PDF tool. Creating a free account lets you access your processing history and manage your files.' },
   { q: 'What PDF operations are supported?', a: 'We support merging, splitting, compressing, rotating, watermarking, protecting, reordering, and converting Word/Images to PDF. More tools are coming soon!' },
-  { q: 'Is PDFtoolkit really free?', a: 'Yes! All core PDF tools are completely free. We plan to offer a Pro plan with advanced features in the future.' },
+  { q: 'Is PDFtoolkit really free?', a: 'Yes! Every PDF tool is completely free to use with no hidden fees, no subscriptions, and no limits. All tools are available to everyone.' },
 ]
 
 export default function Home() {
@@ -196,3 +196,4 @@ export default function Home() {
     </>
   )
 }
+

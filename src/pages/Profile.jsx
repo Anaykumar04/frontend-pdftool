@@ -132,14 +132,8 @@ export default function Profile() {
 
             <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: 24 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Subscription</span>
-                <span style={{ fontWeight: 600, color: user.plan === 'free' ? '#64748b' : '#10b981' }}>
-                  {user.plan === 'free' ? 'Free Forever' : 'Pro Plan'}
-                </span>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 16 }}>
-                <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Expires On</span>
-                <span style={{ fontWeight: 600 }}>{user.subscriptionEnd ? formatDate(user.subscriptionEnd).split(',')[0] : 'Never'}</span>
+                <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Account Type</span>
+                <span style={{ fontWeight: 600, color: '#10b981' }}>Free Forever</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <span style={{ color: '#64748b', fontSize: '0.85rem' }}>Joined</span>
@@ -155,12 +149,9 @@ export default function Profile() {
             </button>
           </div>
 
-          <div style={{ background: 'var(--gradient-hero)', borderRadius: 24, padding: 32, color: 'white' }}>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 12 }}>Need more power?</h3>
-            <p style={{ fontSize: '0.9rem', opacity: 0.8, marginBottom: 24 }}>Upgrade to Pro to unlock unlimited file size, more tools, and priority processing.</p>
-            <Link to="/pricing" style={{ textDecoration: 'none' }}>
-              <button style={{ width: '100%', padding: '12px', borderRadius: 12, border: 'none', background: 'white', color: 'var(--navbar-bg)', fontWeight: 700, cursor: 'pointer' }}>Upgrade Now 🚀</button>
-            </Link>
+          <div style={{ background: 'rgba(139,92,246,0.1)', borderRadius: 24, padding: 32, border: '1px solid rgba(139,92,246,0.2)' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: 8 }}>🎉 All Tools Free</h3>
+            <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', marginBottom: 0, lineHeight: 1.6 }}>Every PDF tool is completely free to use. No limits, no subscriptions, no hidden fees.</p>
           </div>
         </div>
 
