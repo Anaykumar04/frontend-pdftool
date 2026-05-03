@@ -38,21 +38,29 @@ export const getOperationLabel = (op) => {
 
 export const downloadFile = (url, filename) => {
   let downloadUrl = url
+
+  // Force https — Render returns http URLs which browsers block as insecure
+  if (downloadUrl && downloadUrl.startsWith('http://')) {
+    downloadUrl = downloadUrl.replace('http://', 'https://')
+  }
+
   // If it's a Cloudinary URL, inject fl_attachment to force download
-  if (url.includes('cloudinary.com') && !url.includes('fl_attachment')) {
-    if (url.includes('/upload/')) {
-      downloadUrl = url.replace('/upload/', '/upload/fl_attachment/')
-    } else if (url.includes('/raw/upload/')) {
-      downloadUrl = url.replace('/raw/upload/', '/raw/upload/fl_attachment/')
+  if (downloadUrl.includes('cloudinary.com') && !downloadUrl.includes('fl_attachment')) {
+    if (downloadUrl.includes('/upload/')) {
+      downloadUrl = downloadUrl.replace('/upload/', '/upload/fl_attachment/')
+    } else if (downloadUrl.includes('/raw/upload/')) {
+      downloadUrl = downloadUrl.replace('/raw/upload/', '/raw/upload/fl_attachment/')
     }
   }
+
   const a = document.createElement('a')
   a.href = downloadUrl
   a.download = filename || 'download'
-  a.target = '_blank' // Fallback for cross-origin
+  a.target = '_blank'
   document.body.appendChild(a)
   a.click()
   document.body.removeChild(a)
 }
 
 export const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms))
+
