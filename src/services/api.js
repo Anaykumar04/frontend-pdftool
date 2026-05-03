@@ -173,6 +173,61 @@ export const pdfApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })
+  },
+  pdfToJpg: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/pdf-to-jpg', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  removeBlankPages: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/remove-blank-pages', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  flattenPdf: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/flatten-pdf', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  repairPdf: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/repair-pdf', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  headerFooter: (file, header, footer, fontSize, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('header', header)
+    form.append('footer', footer)
+    form.append('fontSize', fontSize)
+    return api.post('/pdf/header-footer', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
+  },
+  cropPdf: (file, top, bottom, left, right, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    form.append('top', top)
+    form.append('bottom', bottom)
+    form.append('left', left)
+    form.append('right', right)
+    return api.post('/pdf/crop-pdf', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
   }
 }
 

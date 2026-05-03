@@ -29,6 +29,12 @@ import PDFEditor from './pages/tools/PDFEditor'
 import BackgroundColor from './pages/tools/BackgroundColor'
 import FileConverter from './pages/tools/FileConverter'
 import FillablePDF from './pages/tools/FillablePDF'
+import PdfToJpg from './pages/tools/PdfToJpg'
+import RemoveBlankPages from './pages/tools/RemoveBlankPages'
+import FlattenPDF from './pages/tools/FlattenPDF'
+import RepairPDF from './pages/tools/RepairPDF'
+import HeaderFooter from './pages/tools/HeaderFooter'
+import CropPDF from './pages/tools/CropPDF'
 import ComingSoonTool from './pages/ComingSoonTool'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
@@ -71,7 +77,12 @@ export default function App() {
           <Route path="/tools/edit" element={<PDFEditor />} />
           <Route path="/tools/fillable-pdf" element={<FillablePDF />} />
           <Route path="/tools/background-color" element={<BackgroundColor />} />
-          <Route path="/tools/pdf-to-jpg" element={<ComingSoonTool name="PDF to JPG" category="Convert from PDF" />} />
+          <Route path="/tools/pdf-to-jpg" element={<PdfToJpg />} />
+          <Route path="/tools/remove-blank-pages" element={<RemoveBlankPages />} />
+          <Route path="/tools/flatten-pdf" element={<FlattenPDF />} />
+          <Route path="/tools/repair-pdf" element={<RepairPDF />} />
+          <Route path="/tools/header-footer" element={<HeaderFooter />} />
+          <Route path="/tools/crop-pdf" element={<CropPDF />} />
           <Route path="/tools/pdf-to-word" element={<ComingSoonTool name="PDF to Word" category="Convert from PDF" />} />
           <Route path="/tools/ocr" element={<ComingSoonTool name="OCR PDF" category="Convert from PDF" />} />
 
@@ -88,3 +99,4 @@ export default function App() {
     </div>
   )
 }
+

@@ -16,9 +16,14 @@ const allTools = [
     tools: [
       { to: '/tools/compress', icon: '📦', label: 'Compress PDF', desc: 'Reduce PDF file size without losing quality', color: 'bg-green' },
       { to: '/tools/rotate', icon: '🔄', label: 'Rotate PDF', desc: 'Rotate all or specific pages', color: 'bg-cyan' },
+      { to: '/tools/crop-pdf', icon: '✂️', label: 'Crop PDF', desc: 'Crop margins from all pages', color: 'bg-cyan' },
+      { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change the background color of pages', color: 'bg-pink' },
+      { to: '/tools/header-footer', icon: '📝', label: 'Header & Footer', desc: 'Add custom header and footer to every page', color: 'bg-indigo' },
+      { to: '/tools/flatten-pdf', icon: '📋', label: 'Flatten PDF', desc: 'Make form fields and annotations permanent', color: 'bg-purple' },
+      { to: '/tools/repair-pdf', icon: '🔧', label: 'Repair PDF', desc: 'Fix corrupted or damaged PDF files', color: 'bg-red' },
+      { to: '/tools/remove-blank-pages', icon: '🧹', label: 'Remove Blank Pages', desc: 'Auto-detect and remove empty pages', color: 'bg-green' },
       { to: '/tools/edit', icon: '✏️', label: 'PDF Editor', desc: 'Edit PDF text and elements online', color: 'bg-purple' },
       { to: '/tools/fillable-pdf', icon: '🔍', label: 'PDF Form Scanner', desc: 'AI-scan and fill PDF forms in real-time', color: 'bg-indigo' },
-      { to: '/tools/background-color', icon: '🎨', label: 'Background Color', desc: 'Change the background color of pages', color: 'bg-pink' },
     ]
   },
   {
@@ -45,9 +50,9 @@ const allTools = [
     category: 'Convert from PDF',
     tools: [
       { to: '/tools/extract-text', icon: '📝', label: 'Extract Text', desc: 'Convert PDF content to plain text', color: 'bg-purple' },
+      { to: '/tools/pdf-to-jpg', icon: '📸', label: 'PDF to JPG', desc: 'Convert each PDF page to a JPG image', color: 'bg-blue' },
       { to: '/tools/extract-images', icon: '🖼️', label: 'Extract Images', desc: 'Save all images from PDF as a ZIP', color: 'bg-teal' },
       { to: '/tools/translate-pdf', icon: '🌍', label: 'Translate PDF', desc: 'Translate PDF content to any language', color: 'bg-indigo' },
-      { to: '/tools/pdf-to-jpg', icon: '📸', label: 'PDF to JPG', desc: 'Convert PDF pages to JPG images', color: 'bg-blue' },
       { to: '/tools/pdf-to-word', icon: '📘', label: 'PDF to Word', desc: 'Convert PDF to editable Word document', color: 'bg-blue' },
       { to: '/tools/ocr', icon: '👁️', label: 'OCR PDF', desc: 'Make scanned PDFs searchable and editable', color: 'bg-pink' },
     ]
