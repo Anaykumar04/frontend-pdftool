@@ -5,16 +5,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
-          'google-oauth': ['@react-oauth/google'],
-          'pdf-lib': ['pdf-lib'],
-          'axios': ['axios'],
-        }
-      }
-    }
   },
   server: {
     port: 5173,
