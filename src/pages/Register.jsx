@@ -2,18 +2,15 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
-import { FcGoogle } from 'react-icons/fc'
 import { GoogleLogin } from '@react-oauth/google'
 
 export default function Register() {
   const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
   const [loading, setLoading] = useState(false)
-  const [showGoogleModal, setShowGoogleModal] = useState(false)
-  const [googleStep, setGoogleStep] = useState('list') // 'list', 'email', 'otp'
+  const [showOtpModal, setShowOtpModal] = useState(false)
   const [selectedEmail, setSelectedEmail] = useState('')
   const [otp, setOtp] = useState('')
-  const [customEmail, setCustomEmail] = useState('')
-  const { register, login, sendOTP, verifyOTP, loginWithGoogle } = useAuth()
+  const { register, sendOTP, verifyOTP, loginWithGoogle } = useAuth()
   const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
@@ -23,31 +20,19 @@ export default function Register() {
     if (form.password !== form.confirm) return toast.error('Passwords do not match')
     setLoading(true)
     try {
-      await register(form.name, form.email, form.password)
-      await sendOTP(form.email)
-      setSelectedEmail(form.email)
-      setGoogleStep('otp')
-      setShowGoogleModal(true)
-      toast.success('Account created! Please verify your email 🎉')
+      const u = await register(form.name, form.email, form.password)
+      // Admin → direct access, no OTP needed
+      if (u.role === 'admin' || u.isVerified) {
+        toast.success(`Welcome, ${u.name}! 🎉`)
+        navigate(u.role === 'admin' ? '/dashboard' : '/profile')
+      } else {
+        // Regular user → show OTP modal (OTP already sent by backend)
+        setSelectedEmail(form.email)
+        setShowOtpModal(true)
+        toast.success('Account created! Check your email for the verification code')
+      }
     } catch (err) {
       toast.error(err.message || 'Registration failed')
-    } finally { setLoading(false) }
-  }
-
-  const startVerification = async (email, name) => {
-    setLoading(true)
-    try {
-      const password = 'google_demo_password_123'
-      try {
-        await login(email, password)
-      } catch (err) {
-        await register(name, email, password)
-      }
-      await sendOTP(email)
-      setGoogleStep('otp')
-      toast.success('Verification code sent to ' + email)
-    } catch (err) {
-      toast.error('Failed to start verification')
     } finally { setLoading(false) }
   }
 
@@ -57,11 +42,22 @@ export default function Register() {
     setLoading(true)
     try {
       const u = await verifyOTP(selectedEmail, otp)
-      toast.success(`Welcome, ${u.name}! 🎉`)
-      setShowGoogleModal(false)
+      toast.success(`Welcome to PDFtoolkit, ${u.name}! 🎉`)
+      setShowOtpModal(false)
+      navigate('/profile')
+    } catch (err) {
+      toast.error('Invalid or expired OTP')
+    } finally { setLoading(false) }
+  }
+
+  const handleGoogleSuccess = async (credentialResponse) => {
+    setLoading(true)
+    try {
+      const u = await loginWithGoogle(credentialResponse.credential)
+      toast.success(`Welcome to PDFtoolkit, ${u.name}! 🎉`)
       navigate(u.role === 'admin' ? '/dashboard' : '/profile')
     } catch (err) {
-      toast.error('Invalid OTP')
+      toast.error(err.message || 'Google login failed')
     } finally { setLoading(false) }
   }
 
@@ -101,80 +97,76 @@ export default function Register() {
             <label>Confirm Password</label>
             <input type="password" placeholder="Repeat password" value={form.confirm} onChange={update('confirm')} />
           </div>
-          <button type="submit" className="btn btn-primary" disabled={loading} style={{ width: '100%', justifyContent: 'center', marginTop: 4 }}>
-            {loading ? <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Processing...</> : '🚀 Create Free Account'}
+          <button type="submit" className="btn btn-primary" disabled={loading}
+            style={{ width: '100%', justifyContent: 'center', marginTop: 4 }}>
+            {loading ? <><span className="spinner" style={{ width: 18, height: 18, borderWidth: 2 }} /> Creating account...</> : '🚀 Create Free Account'}
           </button>
         </form>
 
         <div className="auth-divider"><span>or</span></div>
-        
+
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 12 }}>
           <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              setLoading(true);
-              try {
-                const u = await loginWithGoogle(credentialResponse.credential);
-                toast.success(`Welcome to PDFtoolkit, ${u.name}! 🎉`);
-                navigate(u.role === 'admin' ? '/dashboard' : '/profile');
-              } catch (err) {
-                toast.error(err.message || 'Google Login failed');
-              } finally {
-                setLoading(false);
-              }
-            }}
-            onError={() => {
-              toast.error('Google Login Failed');
-            }}
+            onSuccess={handleGoogleSuccess}
+            onError={() => toast.error('Google login failed')}
             useOneTap
             theme="filled_blue"
             shape="pill"
+            text="signup_with"
           />
         </div>
 
         <p className="auth-footer">
-          Already have an account? <Link to="/login" style={{ color: 'var(--accent-purple-light)', fontWeight: 600 }}>Sign in</Link>
+          Already have an account?{' '}
+          <Link to="/login" style={{ color: 'var(--accent-purple-light)', fontWeight: 600 }}>Sign in</Link>
         </p>
       </div>
 
-      {/* OTP Verification Modal (for manual registration) */}
-      {showGoogleModal && (
-        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0, 0, 0, 0.5)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
-          <div style={{ background: 'white', borderRadius: 12, width: 400, maxWidth: '90%', padding: '24px', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', animation: 'fadeUp 0.3s ease-out' }}>
-            <div style={{ textAlign: 'center', marginBottom: 20 }}>
-              <h2 style={{ fontSize: '1.25rem', fontWeight: 600, color: '#202124' }}>
-                Verify your identity
-              </h2>
-              <p style={{ color: '#5f6368', fontSize: '0.9rem', marginTop: 8 }}>
-                Enter the code sent to {selectedEmail}
+      {/* OTP Verification Modal */}
+      {showOtpModal && (
+        <div style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(4px)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }}>
+          <div style={{ background: '#1a1a2e', border: '1px solid rgba(139,92,246,0.3)', borderRadius: 16, width: 420, maxWidth: '90%', padding: '32px', boxShadow: '0 25px 50px rgba(0,0,0,0.5)' }}>
+            <div style={{ textAlign: 'center', marginBottom: 24 }}>
+              <div style={{ fontSize: 40, marginBottom: 12 }}>📧</div>
+              <h2 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#e2e8f0', margin: 0 }}>Verify your email</h2>
+              <p style={{ color: '#94a3b8', fontSize: '0.9rem', marginTop: 8 }}>
+                We sent a 6-digit code to<br />
+                <strong style={{ color: '#c4b5fd' }}>{selectedEmail}</strong>
               </p>
             </div>
-            
-            <form onSubmit={handleOtpVerify} style={{ padding: '0 4px' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', gap: 12, marginBottom: 20 }}>
-                <input 
-                  type="text" 
-                  placeholder="      6-digit code" 
-                  maxLength={6}
-                  value={otp}
-                  onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
-                  style={{ width: '100%', padding: '12px', borderRadius: 8, border: '1px solid #dadce0', textAlign: 'center', fontSize: '1.2rem', letterSpacing: '4px' }}
-                  autoFocus
-                />
-              </div>
-              <button type="submit" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center', background: '#1a73e8' }} disabled={loading}>
-                {loading ? 'Verifying...' : 'Verify & Sign In'}
+
+            <form onSubmit={handleOtpVerify}>
+              <input
+                type="text"
+                placeholder="Enter 6-digit code"
+                maxLength={6}
+                value={otp}
+                onChange={e => setOtp(e.target.value.replace(/\D/g, ''))}
+                style={{ width: '100%', padding: '14px', borderRadius: 10, border: '1px solid rgba(139,92,246,0.4)', background: 'rgba(255,255,255,0.05)', color: '#e2e8f0', textAlign: 'center', fontSize: '1.5rem', letterSpacing: '8px', boxSizing: 'border-box', outline: 'none' }}
+                autoFocus
+              />
+              <button type="submit" className="btn btn-primary"
+                style={{ width: '100%', justifyContent: 'center', marginTop: 16 }} disabled={loading}>
+                {loading ? 'Verifying...' : '✅ Verify Email'}
               </button>
-              <p style={{ textAlign: 'center', marginTop: 16, fontSize: '0.85rem', color: '#5f6368' }}>
-                Didn't get a code? <button type="button" onClick={() => sendOTP(selectedEmail)} style={{ background: 'none', border: 'none', color: '#1a73e8', cursor: 'pointer', padding: 0 }}>Resend</button>
-              </p>
             </form>
 
-            <div style={{ marginTop: 20, textAlign: 'right' }}>
-              <button onClick={() => setShowGoogleModal(false)} style={{ background: 'transparent', border: 'none', color: '#1a73e8', fontWeight: 500, cursor: 'pointer', padding: '8px 16px', borderRadius: 4 }}>Cancel</button>
-            </div>
+            <p style={{ textAlign: 'center', marginTop: 16, fontSize: '0.85rem', color: '#64748b' }}>
+              Didn't receive it?{' '}
+              <button type="button" onClick={() => { sendOTP(selectedEmail); toast.success('New code sent!') }}
+                style={{ background: 'none', border: 'none', color: '#a78bfa', cursor: 'pointer', padding: 0, fontWeight: 600 }}>
+                Resend code
+              </button>
+            </p>
+
+            <button onClick={() => setShowOtpModal(false)}
+              style={{ display: 'block', margin: '12px auto 0', background: 'transparent', border: 'none', color: '#64748b', cursor: 'pointer', fontSize: '0.85rem' }}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
     </div>
   )
 }
+
