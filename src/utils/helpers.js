@@ -39,8 +39,9 @@ export const getOperationLabel = (op) => {
 export const downloadFile = (url, filename) => {
   let downloadUrl = url
 
-  // Force https — Render returns http URLs which browsers block as insecure
-  if (downloadUrl && downloadUrl.startsWith('http://')) {
+  // Force https only for production (non-localhost) URLs
+  // Localhost doesn't have SSL so keep http://
+  if (downloadUrl && downloadUrl.startsWith('http://') && !downloadUrl.includes('localhost') && !downloadUrl.includes('127.0.0.1')) {
     downloadUrl = downloadUrl.replace('http://', 'https://')
   }
 
