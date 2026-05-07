@@ -228,6 +228,14 @@ export const pdfApi = {
       headers: { 'Content-Type': 'multipart/form-data' },
       onUploadProgress: onProgress
     })
+  },
+  pdfToWord: (file, onProgress) => {
+    const form = new FormData()
+    form.append('file', file)
+    return api.post('/pdf/pdf-to-word', form, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+      onUploadProgress: onProgress
+    })
   }
 }
 

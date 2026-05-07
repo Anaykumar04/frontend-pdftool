@@ -35,6 +35,7 @@ import FlattenPDF from './pages/tools/FlattenPDF'
 import RepairPDF from './pages/tools/RepairPDF'
 import HeaderFooter from './pages/tools/HeaderFooter'
 import CropPDF from './pages/tools/CropPDF'
+import PdfToWord from './pages/tools/PdfToWord'
 import ComingSoonTool from './pages/ComingSoonTool'
 import NotFound from './pages/NotFound'
 import PrivateRoute from './components/PrivateRoute'
@@ -83,7 +84,7 @@ export default function App() {
           <Route path="/tools/repair-pdf" element={<RepairPDF />} />
           <Route path="/tools/header-footer" element={<HeaderFooter />} />
           <Route path="/tools/crop-pdf" element={<CropPDF />} />
-          <Route path="/tools/pdf-to-word" element={<ComingSoonTool name="PDF to Word" category="Convert from PDF" />} />
+          <Route path="/tools/pdf-to-word" element={<PdfToWord />} />
           <Route path="/tools/ocr" element={<ComingSoonTool name="OCR PDF" category="Convert from PDF" />} />
 
           <Route path="/login" element={<Login />} />
